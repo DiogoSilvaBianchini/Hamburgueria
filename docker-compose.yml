@@ -1,0 +1,46 @@
+services:
+  db_postgres: 
+    container_name: postgres_db
+    image: postgres
+    ports:
+      - ${DB_POSTGRES_PORT}:5432
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_DB=${DB_POSTGRES_NAME}
+      - POSTGRES_USER=${DB_POSTGRES_USER_NAME}
+      - POSTGRES_PASSWORD=${DB_POSTGRES_PASS}
+    volumes:
+      - ./databases/postgres:/var/lib/postgresql/data
+  db_mongo:
+    container_name: mongodb
+    image: mongo:latest
+    env_file:
+      - ./.env
+    volumes:
+      - ./databases/mongodb:/usr/src/app
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: burguer
+      MONGO_INITDB_ROOT_USERNAME: entropia
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+  api:
+    image: node:latest
+    container_name: api
+    depends_on:
+      - db_mongo
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    ports:
+      - ${PORT}:${PORT}
+    command: npm run dev
+    logging:
+      driver: 'json-file'
+      options:  
+        max-size: "10m"
+        max-file: "5"
+networks:
+  app_network:
+    driver: bridge

@@ -1,0 +1,760 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API POSTGRES",
+        "description": "API Rest, feita para o gerenciamento do banco de dados PostgresSQL.",
+        "contact": {
+            "email": "diogosilvabianchini@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8082",
+            "description": "API de desenvolvimento"
+        }
+    ],
+    "paths": {
+        "/product": {
+            "get": {
+                "sumarry": "Buscar todos os produtos",
+                "description": "Buscar por produto utilizando parametros",
+                "tags": ["Products"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {"type": "string"},
+                                        "status": {"type": "number"}
+                                    }
+                                },
+                                "examples": {
+                                    "All Products": {
+                                        "$ref": "#/components/schemas/ProductExemple"
+                                    },
+                                    "No product registered": {
+                                        "value": {
+                                            "results": [],
+                                            "status": 200
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {"type": "string"},
+                                        "status": {"type": "number"}
+                                    }
+                                },
+                                "examples": {
+                                    "Erro interno": {
+                                        "value": {
+                                            "results": "Erro interno do servidor",
+                                            "status": 500
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "sumarry": "Cadastro de produtos.",
+                "description": "Rota para cadastro de novos produto, a rota recebe um multpart/form-data, o endpoint solícita que o usuario possua um token logo, antes de criar um produto o usuario devera fazer login.",
+                "tags": ["Products"],
+                "security": [{"bearerAuth": []}],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "description": "Titulo do produto"
+                                    },
+                                    "price": {
+                                        "type": "string",
+                                        "description": "Preço do produto"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "Descrição do produto"
+                                    },
+                                    "imgs": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        },
+                                        "description": "Array com todos os arquivos convertidos em multipart/form-data."
+                                    },
+                                    "categoryId": {
+                                        "type": "integer",
+                                        "description": "ID da categoria do produto. A categoria precisa está cadastrada para mais informações consulte a rota /categoria."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                "201": {
+                    "description": "Created",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "properties": {
+                                        "results": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "number"
+                                        }
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Product created ": {
+                                    "value": {
+                                        "results": "Produto adicionado com sucesso",
+                                        "status": 201
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "401": {
+                    "description": "Invalid token",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "properties": {
+                                        "results": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "number"
+                                        }
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Token invalid": {
+                                    "value": {
+                                        "results": "Token inválido",
+                                        "status": 401
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "describe": "Internal Error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "properties": {
+                                        "results": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "number"
+                                        } 
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Erro interno": {
+                                    "value": {
+                                        "results": "Erro interno do servidor",
+                                        "status": 500
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                }
+            },
+            "put": { 
+                "sumarry": "Rota de atualização para produtos.",
+                "description": "A rota de atualização recebe um multipart/form-data contendo title, describe, price e arquivos de imagem com a tag imgs. O endpoint é aceita todos os elementos sitados anteriormente, mas tembem aceita apenas um elemento sozinho. Para fins de segurança o endPoint somente irá aceitar ser alterado pelo usuario que o cadastrou ou por um adiminstrador com authorização total, nunca por outro usuario.",
+                "tags": ["Products"],
+                "security": [{"bearerAuth": []}],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "type": "string"
+                                    },
+                                    "describe": {
+                                        "type": "string"
+                                    },
+                                    "imgs": {
+                                        "type": "file",
+                                        "in": "formData"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {"type": "string"},
+                                        "status": {"type": "number"}
+                                    }
+                                },
+                                "examples": {
+                                    "Success": {
+                                        "value":{
+                                            "results": "Produto atualizado com sucesso",
+                                            "status": 200
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {"type": "string"},
+                                        "status": {"type": "number"}
+                                    }
+                                },
+                                "examples": {
+                                    "Token invalid": {
+                                        "value": {
+                                            "results": "Token inválido",
+                                            "status": 401
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "results":"Erro interno do servidor",
+                                        "status": 500
+                                    }
+                                },
+                                "examples": {
+                                    "Erro interno": {
+                                        "value": {
+                                            "results": "Erro interno do servidor",
+                                            "status": 500
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "sumarry": "Remove produto",
+                "description": "Remove um produto do banco de dados atráves do id. A rota solicita um Bearer token com o id do usuario que criou o produto ou de um administrador para realizar a remoção.",
+                "tags": ["Products"],
+                "security": [{"bearerAuth": []}],
+                "parameters": [{
+                    "in": "path",
+                    "name": "id"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {"type": "string"},
+                                        "status": {"type": "number"}
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "value": {
+                                            "results": "Produto removido com sucesso",
+                                            "status": 201
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {"type": "string"},
+                                        "status": {"type": "number"}
+                                    }
+                                },
+                                "examples": {
+                                    "Token invalid": {
+                                        "value": {
+                                            "results":"Token inválido",
+                                            "status": 401
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {"type": "string"},
+                                        "status": {"type": "number"}
+                                    }
+                                },
+                                "examples": {
+                                    "Erro interno": {
+                                        "value": {
+                                           "results": "Erro interno do servidor",
+                                            "status": 500
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/product/filter": {
+            "get": {
+                "sumarry": "Buscar personalizada por produtos",
+                "description": "A rota de busca por filtro utiliza query params para fazer buscas no banco de dados.",
+                "tags": ["Products"],
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Busca produto pelo titulo",
+                        "schema": {
+                            "type": "string"
+                        } 
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductSchema"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user": {
+            "get": {
+                "description": "A rota de buscar todos os usuarios são desenvolvidas para uso de desenvolvimento e para uso do cliente.",
+                "tags": ["users"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {"type": "string"},
+                                        "status": {"type": "number"}
+                                    }
+                                },
+                                "examples": {
+                                    "Get users": {
+                                        "value": {
+                                            "id": 5,
+                                            "name": "Username",
+                                            "email": "user@mail.com",
+                                            "buy_list": [],
+                                            "favority_list": [],
+                                            "createdAt": "2024-07-27T05:41:59.296Z",
+                                            "updatedAt": "2024-07-27T05:52:26.845Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Error",
+                        "content": {
+                            "application/json": {
+                                "$ref": "#/components/schemas/InternalError"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Rota de registro para novos usuario.",
+                "tags": ["users"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {"type": "string"},
+                                    "email": {"type": "string"},
+                                    "password": {"type": "string"}
+                                }
+                            },
+                            "examples": {
+                                "Register new user": {
+                                    "value": {
+                                        "name": "User name",
+                                        "email": "exemple@mail.com",
+                                        "password": "Admin123!"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Atualização de dados do usuario.",
+                "tags": ["users"],
+                "security": [{"bearerAuth": []}],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "update all fields": {
+                                    "value":{
+                                        "email": "exemple2@mail.com",
+                                        "password": "123Admin#"
+                                    }
+                                },
+                                "update one field": {
+                                    "value": {
+                                        "email": "exemple2@mail.com"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {"type": "string"},
+                                        "status": {"type": "number"}
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "value": {
+                                            "results": "Usuario atualizado com sucesso",
+                                            "status": 200
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {"type": "string"},
+                                        "status": {"type": "number"}
+                                    }
+                                },
+                                "examples": {
+                                    "Token invalid": {
+                                        "value": {
+                                            "results": "Token inválido",
+                                            "status": 401
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {"type": "string"},
+                                        "status": {"type": "number"}
+                                    }
+                                },
+                                "examples": {
+                                    "Erro interno": {
+                                        "value": {
+                                            "results": "Erro interno do servidor",
+                                            "status": 500
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Remover um usuario atráves do ID",
+                "tags": ["users"],
+                "security": [{"bearerAuth": []}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {"type": "string"},
+                                        "status": {"type": "number"} 
+                                    }
+                                },
+                                "examples": {
+                                    "Success": {
+                                        "value": {
+                                            "results": "Usuario removido com sucesso",
+                                            "status": 200
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {"type": "object"},
+                                        "status": {"type": "number"}
+                                    }
+                                },
+                                "examples": {
+                                    "Token invalid": {
+                                        "value": {
+                                            "results": "Token inválido",
+                                            "status": 401
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "results": {"type": "string"},
+                                        "status": {"type": "number"}
+                                    }
+                                },
+                                "examples": {
+                                    "Erro interno": {
+                                        "value": {
+                                            "results": "Erro interno do servidor",
+                                            "status": 500
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ProductSchema": {
+                "type": "object",
+                "properties": {
+                    "results": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string",
+                                "description": "Titulo do produto"
+                            },
+                            "price": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "imgs": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string" 
+                                }
+                            },
+                            "categoryId": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    "status": {
+                        "type": "number"
+                    }
+                }
+            },
+            "ProductExemple": {
+                "value": {
+                    "results": [
+                        {
+                            "title": "Gabinete gamer LED azul",
+                            "description": "Gabinete Gamer branco com 5 coolers e LED azuis",
+                            "price": "250.80",
+                            "imgs": ["imgs/imagem_do_produto1.webp","imgs/imagem_do_produto2.webp"],
+                            "categoryId" : 2
+                        },
+                        {
+                            "title": "Placa de video RTX 2080",
+                            "description": "Placa de video Nvidia motdelo RTX 2080",
+                            "price": "4500.80",
+                            "imgs": ["imgs/imagem_do_produto5.webp","imgs/imagem_do_produto6.webp"],
+                            "categoryId" : 3
+                        }
+                    ],
+                    "status": 200
+                }
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "name": {
+                                "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "InternalError": {
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "properties": {
+                            "results": {
+                                "type": "string"
+                            },
+                            "status": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                },
+                "examples": {
+                    "Internal Error": {
+                        "value": {
+                            "results": "Erro interno do servidor",
+                            "status": 500
+                        }
+                    }
+                }
+                
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
+
