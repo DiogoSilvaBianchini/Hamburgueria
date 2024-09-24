@@ -2,8 +2,8 @@ const Services = require("../services/Services")
 const services = new Services("Product")
 
 const removeImgByKey = require("../utils/removeImgByKey")
-const db = require("../database/models/index")
-const {queryRegex, queryNumber, queryRegexList} = require("../utils/queryBuilder")
+const db = require("../database/postgress/models/index")
+const {queryNumber, queryRegexList} = require("../utils/queryBuilder")
 const { Op } = require("sequelize")
 
 const populateCategory = {

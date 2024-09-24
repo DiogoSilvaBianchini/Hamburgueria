@@ -2,7 +2,7 @@ const path = require("path")
 
 module.exports = {
     "config": path.resolve("src", "config", "postgresConfig.js"),
-    "models-path": path.resolve("src", "database", "models"),
-    "migrations-path": path.resolve("src", "database", "migrations"),
-    "seeders-path": path.resolve("src", "database", "seeders"),
+    "models-path": path.resolve("src", "database", "postgress", "models"),
+    "migrations-path": path.resolve("src", "database", "postgress", "migrations"),
+    "seeders-path": path.resolve("src", "database", "postgress", "seeders"),
 }

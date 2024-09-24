@@ -1,4 +1,4 @@
-const db = require("../database/models")
+const db = require("../database/postgress/models")
 
 class Services{
     constructor(model){

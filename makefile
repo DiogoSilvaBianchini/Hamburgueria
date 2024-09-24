@@ -3,7 +3,7 @@ include .env
 .PHONY: up
 
 up:
-	docker-compose up
+	docker-compose up -d
 
 .PHONY: down
 
@@ -15,7 +15,7 @@ down:
 logs:
 	docker-compose logs
 
-.PHONY: api
+.PHONY: databases
 
-api: 
-	docker-compose up api
+databases:
+	docker-compose up db_postgres db_mongo

@@ -4,6 +4,7 @@ const { encryptedPassword } = require("../middlewares/userMiddlewares")
 const mailerConfig = require("../config/nodeMailerConfig")
 
 const Service = require("../services/Services")
+const recoverModel = require("../database/mongoDB/model/recoverSchema")
 const service = new Service("User")
 
 class UserController{
@@ -37,6 +38,7 @@ class UserController{
 
     static async createNewUser(req, res, next){
         const {name, email, password} = req.body
+
         try {
             const hash = await encryptedPassword(password)
             await service.createNewRegister({name, email, password: hash})
@@ -59,20 +61,60 @@ class UserController{
         }
     }
 
-    static async recoverPassword(payLoad, req, res, next){
+    static async generateCodeRecover(payLoad, req, res, next){
         try {
+            const code = Math.floor(Math.random() * 1E6)
+            const salt = await bcryptjs.genSalt(10)
+            const hash = await bcryptjs.hash(`${process.env.SECRET_CODE}-${code}`, salt)
+
+            await recoverModel.create({
+                userId: payLoad.id,
+                recoveryPass: hash 
+            })
+
             await mailerConfig.sendMail({
                 from: process.env.SMTP_MAIL,
                 to:  payLoad.email,
                 subject: "Recuperação de seja Burguer Smith",
-                text: "Código de acesso: 506354"
+                text: `Código de acesso: ${code}`
             })
+            
             return res.status(200).json({results: "E-mail enviado com sucesso!", status: 200})
         } catch (error) {
            next(error) 
         }
     }
 
+    static async recoverPass(payload, req, res, next){
+        const { code } = req.body
+        try {
+            const findCode = await recoverModel.findOne({userId: payload.id})
+
+            if(!findCode || !findCode.status){
+                return res.status(410).json({msg: "Código expirou", results: false, status: 410})
+            }
+
+            const isCodeValid  = await bcryptjs.compare(`${process.env.SECRET_CODE}-${code}`, findCode.recoveryPass)
+            
+            if(!isCodeValid ){
+                if(findCode.attempts >= 3){
+                    await recoverModel.findOneAndDelete({userId: payload.id})
+                    return res.status(429).json({msg: "Muitas tentátivas foram feitas, tente novamente em 5 minutos", results: false, status: 429})
+                }
+
+                await recoverModel.findOneAndUpdate(
+                    {userId: payload.id}, {
+                    $inc: {attempts: 1}
+                })
+
+                return res.status(401).json({msg: "Código incorreto", results: false, status: 401})
+            }
+
+            return res.status(200).json({msg: "Código confere", results: true, status: 200})
+        } catch (error) {
+            next(error)
+        }
+    }
 
     static async updateUser(req, res, next){
         const {email, password} = req.body
