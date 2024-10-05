@@ -77,11 +77,14 @@ const checkin = async (req, res, next) => {
         const token = await jwt.verify(bearerToken, process.env.SECRET_TOKEN)
 
         const user = await service.findOne({where: {id: token.id}})
-
-        const payLoad = {id: user.id, name: user.name, email: user.email}
-        return res.status(200).json({results: payLoad, status: 200})
+        if(user){
+            const payLoad = {id: user.id, name: user.name, email: user.email}
+            return next(payLoad)
+        }else{
+            return res.status(401).json({msg: "Token inválido", results: false, status: 200})
+        }
     } catch (error) {
-        return res.status(401).json({results: "Token inválido", status: 401})
+        return res.status(401).json({msg: "Token inválido", results: false, status: 200})
     }
 }
 

@@ -61,20 +61,20 @@ class UserController{
         }
     }
 
-    static async generateCodeRecover(payLoad, req, res, next){
+    static async generateCodeRecover(payload, req, res, next){        
         try {
             const code = Math.floor(Math.random() * 1E6)
             const salt = await bcryptjs.genSalt(10)
             const hash = await bcryptjs.hash(`${process.env.SECRET_CODE}-${code}`, salt)
 
             await recoverModel.create({
-                userId: payLoad.id,
+                userId: payload.id,
                 recoveryPass: hash 
             })
 
             await mailerConfig.sendMail({
                 from: process.env.SMTP_MAIL,
-                to:  payLoad.email,
+                to:  payload.email,
                 subject: "Recuperação de seja Burguer Smith",
                 text: `Código de acesso: ${code}`
             })
@@ -85,8 +85,9 @@ class UserController{
         }
     }
 
-    static async recoverPass(payload, req, res, next){
+    static async confirmeCode(payload, req, res, next){
         const { code } = req.body
+
         try {
             const findCode = await recoverModel.findOne({userId: payload.id})
 
@@ -109,18 +110,35 @@ class UserController{
 
                 return res.status(401).json({msg: "Código incorreto", results: false, status: 401})
             }
-
-            return res.status(200).json({msg: "Código confere", results: true, status: 200})
+            const token = {...payload}
+            return next(token)
         } catch (error) {
             next(error)
         }
     }
 
-    static async updateUser(req, res, next){
+    static async updatePassword(id, req, res, next){
+        const {password} = req.body
+        try {
+            const salt = await bcryptjs.genSalt(10)
+            const hash = await bcryptjs.hash(password, salt)
+
+            await service.updateById(id, {
+                where: {
+                    password: hash
+                }
+            })
+
+            return res.status(200).json({msg: "Senha atualizada com sucesso", status: 200, results: true})
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static async updateUser(token, req, res, next){
         const {email, password} = req.body
-        const token = req.token
         const payload = {}
-        
+        console.log(token.id)
         if(email){
             payload.email = email
         }

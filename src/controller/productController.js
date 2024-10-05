@@ -70,6 +70,7 @@ class ProductController{
             await services.createNewRegister({title, describe, price, categoryId: Number(categoryId), imgs: imgsKeyAws})
             return res.status(201).json({results: "Produto adicionado com sucesso", status: 201})
         } catch (error) {
+            removeImageByKey(imgsKeyAws)
             next(error)
         }
     }
