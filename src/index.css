@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lemon&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root{
+  --principal-font: "Inter", sans-serif;
+  --active-color: #FE7411;
+}
+
+body{
+  width: 100%;
+  background: #EEEEEE;
+}
+
+#root{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0px;
+}
+
+a{
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--principal-font);
+  transition: .3s;
+}
+
+a.active{
+  color: var(--active-color);
+}
+
+ul, li, ol{
+  list-style: none;
+}
+
+h2{
+  font-family: var(--principal-font);
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+button{
+  cursor: pointer;
+  font-size: 14px;
+  font-family: var(--principal-font);
+  padding: 2px;
+  border-color: transparent;
+}
+
+.darkBtn{
+  background-color: #222;
+  color: #fff;
+  transition: .4s;
+}
+
+.darkBtn:hover{
+  background-color: #444;
+}
+
+.orangeBtn{
+  background: #FE6611;
+  color: #fff;
+  border: none;
+  padding: 8px 0px;
+  transition: 1.4s;
+}
+
+.activeButton{
+  animation: clickBtn .8s ease;
+}
+
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button, input[type=number]  { 
+  -webkit-appearance: none; 
+  -moz-appearance: textfield;
+}
+
+input:focus{
+  outline: none;
+}
+
+@keyframes clickBtn{
+  0%{
+    box-shadow: inset 0px 0px 0px #058c42;
+  }
+  100%{
+    box-shadow: inset 200px 0px 0px #058c42;
+  }
+}

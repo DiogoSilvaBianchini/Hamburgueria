@@ -1,0 +1,141 @@
+.cartContainer{
+    width: 95%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 36px 0px;
+}
+
+.cartContainer .productsContainer{
+    width: 100%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    gap: 16px;
+}
+
+.cartContainer .productCard{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.cartContainer .productCard .emptyList{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #c4c4c4;
+}
+
+.cartContainer .productValue{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    background-color: #fff;
+    gap: 32px;
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.cartContainer .productValue h2{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+    font-size: 1.5rem;
+}
+
+.cartContainer .productValue .priceProduct{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 16px 24px;
+    background-color: #eee;
+    border-radius: 8px;
+}
+
+.cartContainer .productValue ul li{
+    list-style: disc;
+    font-family: var(--principal-font);
+    font-size: 14px;
+    transition: .5s;
+}
+
+.cartContainer .productValue ul li.remove{
+    color: rgba(216, 0, 0, 0.521);
+}
+
+.cartContainer .productValue .deliveryContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    gap: 16px;
+}
+
+.cartContainer .productValue .deliveryContainer button{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 8px;
+    border: 2px solid #c4c4c4;
+    background-color: #fff;
+    color: #c4c4c4;
+    border-radius: 8px;
+}
+
+.cartContainer .productValue .deliveryContainer button.active{
+    border-color: transparent;
+    background-color: #222;
+    color: #fff;
+    transition: .3s;
+}
+
+.cartContainer .productValue label{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    font-family: var(--principal-font);
+}
+
+.cartContainer .productValue label input{
+    font-size: 1rem;
+    font-family: var(--principal-font);
+    padding: 4px;
+}
+
+.cartContainer .productValue .columnMenu{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+.cartContainer .productValue .columnMenu h3{
+    font-family: var(--principal-font);
+    font-size: 1.3rem;
+}
+
+.cartContainer .productValue .columnMenu button{
+    width: 100%;
+    border-radius: 8px;
+    padding: 8px;
+}

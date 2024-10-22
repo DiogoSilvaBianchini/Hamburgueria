@@ -1,0 +1,57 @@
+.categoryCardsContainer{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.categoryCardsContainer ul{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.categoryCardsContainer ul li{
+    width: 30%;
+    height: 250px;
+    min-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-radius: 16px;
+    padding: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #fff;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.categoryCardsContainer ul li:nth-child(1){
+    background-color: #222;
+}
+.categoryCardsContainer ul li:nth-child(2){
+    background-color: #FE7511;
+    background-image: url("./dobalTriaglesVector.webp");
+}
+.categoryCardsContainer ul li:nth-child(3){
+    background-color: #0490B7;
+    background-image: url("./triaglesSquad.webp");
+}
+
+.categoryCardsContainer ul li img{
+    width: 100%;
+    max-width: 150px;
+    max-height: 150px;
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+}

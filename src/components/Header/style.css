@@ -1,0 +1,32 @@
+header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    gap: 32px;
+    background-color: #222;
+}
+
+header .linkList{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 0px 16px;
+}
+
+header .linkList a {
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    transition: .4s;
+}
+
+header .linkList a.active{
+    width: 25px;
+    transition: .4s;
+    overflow-x: hidden;
+}
