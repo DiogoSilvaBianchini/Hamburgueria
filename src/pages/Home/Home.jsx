@@ -2,24 +2,17 @@ import "./style.css"
 import CategoryCard from "../../components/CategoryCard/CategoryCard"
 import SlideCards from "../../components/slideCards/SlideCards"
 import useFetch from "../../hooks/useFetch"
-import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
-import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+import Carrosel from "../../components/Carrosel/Carrosel"
+
 
 const Home = () => {
   
   const {data} = useFetch(`product`, "GET")
   
+
   return (
     <div className="homeContainer">
-      <div className="carrosel-container">
-        <button><ArrowBackIosNewRoundedIcon /></button>
-        <ul>
-          <li>
-            <img src="/grill_baguer_banner.webp" alt="" />
-          </li>
-        </ul>
-        <button><ArrowForwardIosRoundedIcon /></button>
-      </div>
+      <Carrosel />
       <section className="categorys">
         <ul>
           <li className="card-category">
