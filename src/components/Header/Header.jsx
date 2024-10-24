@@ -13,7 +13,7 @@ const Header = () => {
             <NavLink to="/" className={({isActive}) => isActive ? "active": ""}><HomeRoundedIcon /> Home</NavLink>
           </li>
           <li>
-            <NavLink to="/menu" className={({isActive}) => isActive ? "active": ""}><LunchDiningRoundedIcon /> Lanches</NavLink>
+            <NavLink to="/menu" className={({isActive}) => isActive ? "active": ""}><LunchDiningRoundedIcon /> Cardápio</NavLink>
           </li>
           <li>
             <NavLink to="/cart" className={({isActive}) => isActive ? "active": ""}><ShoppingCartRoundedIcon /> Carrihno</NavLink>

@@ -22,11 +22,10 @@ header .linkList a {
     align-items: center;
     justify-content: flex-start;
     gap: 8px;
-    transition: .4s;
 }
 
 header .linkList a.active{
     width: 25px;
-    transition: .4s;
+    transition: .8s;
     overflow-x: hidden;
 }

@@ -46,6 +46,10 @@ h2{
   letter-spacing: 1px;
 }
 
+span{
+  font-size: var(--principal-font);
+}
+
 button{
   cursor: pointer;
   font-size: 14px;
@@ -67,13 +71,28 @@ button{
 .orangeBtn{
   background: #FE6611;
   color: #fff;
-  border: none;
+  border: 2px solid transparent;
   padding: 8px 0px;
-  transition: 1.4s;
+  transition: .2s;
 }
 
+.orangeBtn:hover{
+  background: #fff;
+  color: #FE6611;
+  border-color: #FE6611;
+}
+
+
 .activeButton{
-  animation: clickBtn .8s ease;
+  animation: clickBtn 1s linear;
+}
+
+.activeButton svg{
+  color: #fff;
+}
+
+.iconBtn{
+  padding: 8px 0px;
 }
 
 
@@ -91,6 +110,6 @@ input:focus{
     box-shadow: inset 0px 0px 0px #058c42;
   }
   100%{
-    box-shadow: inset 200px 0px 0px #058c42;
+    box-shadow: inset 0px -200px 0px #058c42;
   }
 }
