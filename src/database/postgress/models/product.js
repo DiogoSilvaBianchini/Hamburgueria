@@ -19,7 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     imgs: { 
       type: DataTypes.ARRAY(DataTypes.STRING),
       defaultValue: []
-    }
+    },
+    stripe_product_ID: DataTypes.STRING,
+    stripe_price_ID: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Product',

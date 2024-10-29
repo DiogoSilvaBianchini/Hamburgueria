@@ -1,5 +1,6 @@
 const Services = require("../services/Services")
 const services = new Services("Product")
+const stripe = require("stripe")(process.env.GETWAY_SECRET_KEY)
 
 const removeImgByKey = require("../utils/removeImgByKey")
 const db = require("../database/postgress/models/index")
@@ -29,6 +30,19 @@ const agreeNewImages = async (id, newImgs) => {
 }
 
 class ProductController{
+
+    static async findByOrderTimer(req,res,next){
+        try {
+            const products = await services.findAll({
+                order: [['createdAt', "DESC"]]
+            })
+
+            return res.status(200).json({results: products, status: 200})
+        } catch (error) {
+            next(error)
+        }   
+    }
+
     static async findForFilter(req,res,next){
         const {id, title, categoryId, category} = req.query
         try {
@@ -67,7 +81,19 @@ class ProductController{
         const {title, describe, price, categoryId} = req.body
         
         try {
-            await services.createNewRegister({title, describe, price, categoryId: Number(categoryId), imgs: imgsKeyAws})
+
+            const stripeProduct = await stripe.products.create({
+                name: title,
+                description: describe
+            })
+
+            const priceProduct = await stripe.prices.create({
+                unit_amount: Math.floor(Number(price) * 100),
+                currency: 'brl',
+                product: stripeProduct.id
+            })
+
+            await services.createNewRegister({title, describe, price, categoryId: Number(categoryId), imgs: imgsKeyAws, stripe_product_ID: stripeProduct.id, stripe_price_ID: priceProduct.id})
             return res.status(201).json({results: "Produto adicionado com sucesso", status: 201})
         } catch (error) {
             removeImageByKey(imgsKeyAws)
@@ -139,6 +165,35 @@ class ProductController{
 
             await removeImgByKey(imgs)
             return res.status(201).json({results: "Imagem removida com sucesso!", status: 201})
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static async payment(req,res,next){
+        const {productList} = req.body
+        try {
+            const idList = productList.map(productList => productList.id)
+
+            const findProducts = await services.findAll({
+                attributes: ['id', 'stripe_price_ID'],
+                where: {
+                    id: {[Op.in]: idList}
+                }
+            })
+
+            const items = findProducts.map(productQuerry => {
+                const products = productList.filter(product => productQuerry.id == product.id)
+                return {price: productQuerry.stripe_price_ID, quantity: products[0].quantity}
+            })
+
+            const session = await stripe.checkout.sessions.create({
+                success_url: 'http://localhost:5173/cart',
+                line_items: items,
+                mode: 'payment'
+            })
+
+            return res.status(200).json({results: session.url, status: 200})
         } catch (error) {
             next(error)
         }

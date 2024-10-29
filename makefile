@@ -18,4 +18,4 @@ logs:
 .PHONY: databases
 
 databases:
-	docker-compose up db_postgres db_mongo
+	docker-compose up db_postgres db_mongo -d

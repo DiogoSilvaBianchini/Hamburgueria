@@ -8,9 +8,13 @@ const {validate} = require("express-validation")
 
 router.get("/product", ProductController.findAllProduct)
 router.get("/product/filter", ProductController.findForFilter)
+router.get("/product/filter/time", ProductController.findByOrderTimer)
 
 router.post("/product", uploadImage.array("imgs"), validate(registerFormValidation, {} , {}), checkToken, ProductController.createNewProduct)
+router.post("/product/payment", express.json(), ProductController.payment)
+
 router.put("/product/:id", uploadImage.array("imgs"), checkToken, ProductController.updateProduct)
+
 router.delete("/product/img", express.json(), checkToken, ProductController.removeImage)
 router.delete("/product/:id",  express.json(), checkToken, ProductController.removeProduct)
 

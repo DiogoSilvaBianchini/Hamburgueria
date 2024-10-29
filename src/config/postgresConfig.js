@@ -7,7 +7,13 @@ module.exports = {
     "database": process.env.DB_POSTGRES_NAME,
     "host": "0.0.0.0",
     "dialect": "postgres",
-    "logging": false
+    "logging": false,
+    "pool": {
+      max: 10,
+      min: 1,
+      acquire: 90000,
+      idle: 10000
+    }
   },
   "production": {
     "username": process.env.DB_POSTGRES_USER_NAME,
@@ -19,7 +25,7 @@ module.exports = {
     "pool": {
       max: 10,
       min: 1,
-      acquire: 30000,
+      acquire: 90000,
       idle: 10000
     }
   }
