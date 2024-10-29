@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lemon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 *{
   margin: 0;
@@ -46,6 +46,10 @@ h2{
   letter-spacing: 1px;
 }
 
+button svg{
+  pointer-events: none;
+}
+
 span{
   font-size: var(--principal-font);
 }
@@ -87,6 +91,12 @@ button{
   animation: clickBtn 1s linear;
 }
 
+.arrowButton{
+  background-color: transparent;
+  color: #666;
+  transition: .4s;
+}
+
 .activeButton svg{
   color: #fff;
 }
@@ -94,6 +104,7 @@ button{
 .iconBtn{
   padding: 8px 0px;
 }
+
 
 
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button, input[type=number]  { 

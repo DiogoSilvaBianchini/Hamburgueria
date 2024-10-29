@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 header{
     width: 100%;
     display: flex;
@@ -14,18 +15,19 @@ header .linkList{
     justify-content: center;
     gap: 32px;
     padding: 0px 16px;
+    overflow-x: hidden;
 }
 
-header .linkList a {
-    width: 80px;
+header .linkList a{
+    width: 25px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: 8px;
+    overflow-x: hidden;
+    transition: .8s;
 }
 
 header .linkList a.active{
-    width: 25px;
-    transition: .8s;
-    overflow-x: hidden;
+    width: 100px;
 }

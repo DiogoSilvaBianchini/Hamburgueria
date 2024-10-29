@@ -9,7 +9,7 @@ const Home = () => {
   
   const {data} = useFetch(`product`, "GET")
   
-
+  const {data: productsOrderTime} = useFetch("product/filter/time", "GET")
   return (
     <div className="homeContainer">
       <Carrosel />
@@ -33,7 +33,9 @@ const Home = () => {
         </ul>
       </section>
       <section className="homeContent">
-        <SlideCards titleSlide={"Mais pedidos"} listProducts={data}/>
+        <SlideCards titleSlide={"Novos pratos"} listProducts={productsOrderTime} max={4}/>
+        <SlideCards titleSlide={"Lanches da casa"} listProducts={data} max={4} category={"lanches"}/>
+        <SlideCards titleSlide={"Aperitivos mais pedidos"} listProducts={data} max={4} category={"aperitivos"}/>
       </section>
     </div>
   )

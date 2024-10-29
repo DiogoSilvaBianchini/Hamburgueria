@@ -24,13 +24,13 @@ const Carrosel = () => {
 
   return (
     <div className="carrosel-container">
-        <button onClick={() => carroselBack(-1)}><ArrowBackIosNewRoundedIcon /></button>
+        <button className='arrowButton' onClick={() => carroselBack(-1)}><ArrowBackIosNewRoundedIcon /></button>
         <ul>
             <li>
             <img src={`/carrosel/${carrosel}.webp`} alt="" />
             </li>
         </ul>
-        <button onClick={() => carroselMove(1)}><ArrowForwardIosRoundedIcon /></button>
+        <button className='arrowButton' onClick={() => carroselMove(1)}><ArrowForwardIosRoundedIcon /></button>
     </div>
   )
 }

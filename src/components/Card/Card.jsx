@@ -6,7 +6,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 
-const Card = ({id, title, price, imgUrl}) => {
+const Card = ({id, title, price, imgUrl, fav}) => {
   const dispatch = useDispatch()
   const [blockedBtn, setBlocekdBtn] = useState(false)
 
@@ -46,7 +46,7 @@ const Card = ({id, title, price, imgUrl}) => {
         </div>
         <div className="btns">
             <button className='orangeBtn' disabled={blockedBtn} onMouseEnter={cartAnimation}  onAnimationEnd={e => removeAnimation(e)} onClick={(e) => addProduct(e)}>{ blockedBtn ? <CheckCircleOutlineRoundedIcon /> : <AddShoppingCartIcon />}</button>
-            <button className='iconBtn'><StarBorderIcon /></button>
+            <button className={`iconBtn ${fav ? "active": ""}`} title={fav ? "Remover dos favoritos":"Adicionar aos favoritos"}><StarBorderIcon /></button>
         </div>
     </div>
   )

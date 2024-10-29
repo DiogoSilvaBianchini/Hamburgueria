@@ -31,7 +31,7 @@ const Menu = () => {
         <div className="search-container">
             <label htmlFor="search">
                 <span>Buscar:</span>
-                <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} id='search'/>
+                <input type="text" autoComplete='off' value={search} onChange={(e) => setSearch(e.target.value)} id='search'/>
             </label>
         </div>
         <ul className="products-list">

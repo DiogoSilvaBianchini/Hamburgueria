@@ -8,12 +8,6 @@
     border-radius: 16px;
 }
 
-.carrosel-container button{
-    background-color: transparent;
-    color: #666;
-    transition: .4s;
-}
-
 .carrosel-container button:hover{
     color: #222;
 }

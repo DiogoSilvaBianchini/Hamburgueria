@@ -9,7 +9,7 @@ const CategoryCard = ({img, title, color, path}) => {
         const imgContainer = cardRef.current.children[0]
         const span = cardRef.current.children[1]
         imgContainer.classList.add("active")
-        imgContainer.style.background = color
+        imgContainer.style.borderColor = color
         span.classList.add("active")
     }
 
@@ -17,7 +17,7 @@ const CategoryCard = ({img, title, color, path}) => {
         const imgContainer = cardRef.current.children[0]
         const span = cardRef.current.children[1]
         imgContainer.classList.remove("active")
-        imgContainer.style.background = "#fff"
+        imgContainer.style.borderColor = "#c4c4c4"
         span.classList.remove("active")
     }
     
