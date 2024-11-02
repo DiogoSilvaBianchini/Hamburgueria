@@ -12,6 +12,7 @@ router.get("/product/filter/time", ProductController.findByOrderTimer)
 
 router.post("/product", uploadImage.array("imgs"), validate(registerFormValidation, {} , {}), checkToken, ProductController.createNewProduct)
 router.post("/product/payment", express.json(), ProductController.payment)
+router.post("/product/shipping", express.json(), ProductController.checkShipping)
 
 router.put("/product/:id", uploadImage.array("imgs"), checkToken, ProductController.updateProduct)
 

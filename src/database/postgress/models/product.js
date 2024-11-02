@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: []
     },
     stripe_product_ID: DataTypes.STRING,
-    stripe_price_ID: DataTypes.STRING
+    stripe_price_ID: DataTypes.STRING,
+    ingredients: DataTypes.ARRAY(DataTypes.STRING)
   }, {
     sequelize,
     modelName: 'Product',

@@ -1,11 +1,12 @@
 const Services = require("../services/Services")
 const services = new Services("Product")
 const stripe = require("stripe")(process.env.GETWAY_SECRET_KEY)
-
+const checkCep = require("../utils/checkCep")
 const removeImgByKey = require("../utils/removeImgByKey")
 const db = require("../database/postgress/models/index")
 const {queryNumber, queryRegexList} = require("../utils/queryBuilder")
 const { Op } = require("sequelize")
+const shippingPrice = require("../utils/shippingPrice")
 
 const populateCategory = {
     include: {
@@ -78,7 +79,7 @@ class ProductController{
 
     static async createNewProduct(req,res,next){
         const imgsKeyAws = req.files.map(img => img.key)
-        const {title, describe, price, categoryId} = req.body
+        const {title, describe, price, categoryId, ingredients} = req.body
         
         try {
 
@@ -93,7 +94,7 @@ class ProductController{
                 product: stripeProduct.id
             })
 
-            await services.createNewRegister({title, describe, price, categoryId: Number(categoryId), imgs: imgsKeyAws, stripe_product_ID: stripeProduct.id, stripe_price_ID: priceProduct.id})
+            await services.createNewRegister({title, describe, price, ingredients: ingredients.split(','), categoryId: Number(categoryId), imgs: imgsKeyAws, stripe_product_ID: stripeProduct.id, stripe_price_ID: priceProduct.id})
             return res.status(201).json({results: "Produto adicionado com sucesso", status: 201})
         } catch (error) {
             removeImageByKey(imgsKeyAws)
@@ -194,6 +195,16 @@ class ProductController{
             })
 
             return res.status(200).json({results: session.url, status: 200})
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static async checkShipping(req, res, next){
+        const {cep} = req.body
+        try {
+            const address = await shippingPrice(cep)
+            return res.status(200).json({msg: "Endereço encontrado!", results: address, status: 200})
         } catch (error) {
             next(error)
         }

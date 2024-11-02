@@ -75,11 +75,11 @@ const checkin = async (req, res, next) => {
     try {
         const bearerToken = authorization.split(" ", 2)[1]
         const token = await jwt.verify(bearerToken, process.env.SECRET_TOKEN)
-
-        const user = await service.findOne({where: {id: token.id}})
+        const user = await service.findOne({where: {email: token.email}})
+        
         if(user){
             const payLoad = {id: user.id, name: user.name, email: user.email}
-            return next(payLoad)
+            return res.status(200).json({msg: "Token authenticado", results: payLoad, status: 200})
         }else{
             return res.status(401).json({msg: "Token inválido", results: false, status: 200})
         }
@@ -96,8 +96,8 @@ const checkinNext = async (req,res,next) => {
 
         const user = await service.findOne({where: {id: token.id}})
 
-        const payLoad = {id: user.id, name: user.name, email: user.email}
-        next(payLoad)
+        const payload = {id: user.id, name: user.name, email: user.email}
+        next(payload)
     } catch (error) {
         return res.status(401).json({results: "Token inválido", status: 401})
     }

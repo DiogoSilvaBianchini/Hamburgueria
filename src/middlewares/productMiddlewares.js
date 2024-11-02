@@ -14,6 +14,9 @@ const registerFormValidation = {
         categoryId: 
             Joi.number()
             .required(),
+        ingredients:
+            Joi.string()
+            .required(),
         token: [
             Joi.string()
             .required()
