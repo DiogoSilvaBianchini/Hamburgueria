@@ -24,7 +24,6 @@ const slice = createSlice({
 
         deleteProduct(state, {payload}){
             let removeProduct = state.products.filter(product => product.title !== payload.title)
-            console.log(removeProduct)
             state.products = removeProduct
         }
     }

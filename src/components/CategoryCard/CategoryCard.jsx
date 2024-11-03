@@ -1,9 +1,12 @@
 import { useRef } from 'react'
 import './style.css'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setCategory } from '../../redux/categorySearchSlice'
 
-const CategoryCard = ({img, title, color, path}) => {
+const CategoryCard = ({img, title, color, path, filter}) => {
     const cardRef = useRef("")
+    const dispatch = useDispatch()
 
     const activeCard = () => {
         const imgContainer = cardRef.current.children[0]
@@ -22,7 +25,7 @@ const CategoryCard = ({img, title, color, path}) => {
     }
     
   return (
-    <Link to={path} ref={cardRef} className='category-container' onMouseLeave={desactiveCard} onMouseEnter={activeCard}>
+    <Link to={path} onClick={() => dispatch(setCategory({category: filter}))} ref={cardRef} className='category-container' onMouseLeave={desactiveCard} onMouseEnter={activeCard}>
         <div className="img-container">
             <img src={`./${img}`} alt={title} />
         </div>

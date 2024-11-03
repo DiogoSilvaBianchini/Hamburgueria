@@ -18,6 +18,21 @@
     width: 100%;
     height: 150px;
     padding: 8px;
+    position: relative;
+}
+
+.productCard .productImage .infoBtn{
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    background-color: var(--active-color);
+    color: #fff;   
+    top: 0px;
+    right: 0px; 
 }
 
 .productCard .productImage img{

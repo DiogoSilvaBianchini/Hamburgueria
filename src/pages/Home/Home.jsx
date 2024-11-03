@@ -6,7 +6,6 @@ import Carrosel from "../../components/Carrosel/Carrosel"
 
 
 const Home = () => {
-  
   const {data} = useFetch(`product`, "GET")
   
   const {data: productsOrderTime} = useFetch("product/filter/time", "GET")
@@ -16,19 +15,19 @@ const Home = () => {
       <section className="categorys">
         <ul>
           <li className="card-category">
-            <CategoryCard title={"Lanches"} img={"./grillburguer.webp"} path={"/menu"} color={"#ff5b0fc7"}/>
+            <CategoryCard title={"Lanches"} img={"./grillburguer.webp"} path={"/menu"} filter={"lanches"} color={"#ff5b0fc7"}/>
           </li>
           <li className="card-category">
-            <CategoryCard title={"Aperitivos"} img={"./batataFrita.webp"} path={"/menu"} color={"#ffc300"}/>
+            <CategoryCard title={"Aperitivos"} img={"./batataFrita.webp"} path={"/menu"} filter={"aperitivos"} color={"#ffc300"}/>
           </li>
           <li className="card-category">
-            <CategoryCard title={"Sobremesas"} img={"./sorvete.webp"} path={"/menu"} color={"#c36f09"}/>
+            <CategoryCard title={"Sobremesas"} img={"./sorvete.webp"} path={"/menu"} filter={"sobremesas"} color={"#c36f09"}/>
           </li>
           <li className="card-category">
-            <CategoryCard title={"Bebidas"} img={"./sodaCup.webp"} path={"/menu"} color={"#a63c06"}/>
+            <CategoryCard title={"Bebidas"} img={"./sodaCup.webp"} path={"/menu"} filter={"bebidas"} color={"#a63c06"}/>
           </li>
           <li className="card-category">
-            <CategoryCard title={"Combos"} img={"./comboBurguer.webp"} path={"/menu"} color={"#ff792e"}/>
+            <CategoryCard title={"Combos"} img={"./comboBurguer.webp"} path={"/menu"} filter={"combos"} color={"#ff792e"}/>
           </li>
         </ul>
       </section>

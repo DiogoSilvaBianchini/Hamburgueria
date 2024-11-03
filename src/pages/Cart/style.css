@@ -48,6 +48,23 @@
     border-radius: 8px;
 }
 
+.cartContainer .productValue .row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.cartContainer .productValue .row input{
+    width: 8rem;
+}
+
+.cartContainer .productValue .row button{
+    margin-top: 24px;
+    border-radius: 5px;
+    padding: 4px 16px;
+}
+
 .cartContainer .productValue h2{
     display: flex;
     align-items: center;

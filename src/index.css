@@ -16,6 +16,11 @@ body{
   background: #EEEEEE;
 }
 
+img{
+  max-width: 100%;
+  max-height: 100%;
+}
+
 #root{
   width: 100%;
   display: flex;
@@ -105,7 +110,28 @@ button{
   padding: 8px 0px;
 }
 
+.loadButton{
+  background-color: #fff;
+  border: 3px solid #eee;
+  color: #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
 
+.loadButton svg{
+  animation: spinLoad 1s linear infinite;
+}
+
+@keyframes spinLoad{
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
 
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button, input[type=number]  { 
   -webkit-appearance: none; 

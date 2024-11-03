@@ -3,19 +3,28 @@ import './style.css'
 import Card from '../../components/Card/Card'
 import useFetch from '../../hooks/useFetch'
 import EmptySearch from '../../components/EmptySearch/EmptySearch'
+import { useSelector } from 'react-redux'
 
 const Menu = () => {
     const [search, setSearch] = useState('')
     const [products, setProducts] = useState([])
 
     const {data} = useFetch("product", "GET")
+    const {category} = useSelector(state => state.categorySearch)
     
     useEffect(() => {
-        setProducts(data)
-    },[data])
+        if(category && data){
+            const filtread = data.filter(product => product.Category.name == category)
+            setProducts(filtread)
+            console.log(filtread)
+        }else if(data){
+            setProducts(data)
+        }
+    }, [category, data])
+
 
     useEffect(() => {
-        if(data){
+        if(data && search){
             const filtread = data.filter(product => product.title.toLowerCase().includes(search.toLowerCase()))
 
             if(search){

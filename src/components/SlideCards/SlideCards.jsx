@@ -6,8 +6,9 @@ import { useEffect, useState } from 'react';
 
 const SlideCards = ({titleSlide, listProducts, max, category}) => {
 
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState({pages: []})
     const [page, setPage] = useState(0)
+    const [updateCard, setUpdateCard] = useState(false)
 
     useEffect(() => {
         const pages = []
@@ -29,8 +30,6 @@ const SlideCards = ({titleSlide, listProducts, max, category}) => {
             })
             }
             
-            
-
             setProducts({pages, size: pages.length})
         }
     },[listProducts, category, max])
@@ -45,7 +44,6 @@ const SlideCards = ({titleSlide, listProducts, max, category}) => {
         }
     }    
 
-
     const backPage = () => {
         let backPage = page - 1
         console.log(backPage)
@@ -55,7 +53,7 @@ const SlideCards = ({titleSlide, listProducts, max, category}) => {
             setPage(products.size - 1)
         }
     }
-
+    
   return (
     <div className='slideCards'>
         <h2>{titleSlide}</h2>
@@ -63,11 +61,11 @@ const SlideCards = ({titleSlide, listProducts, max, category}) => {
             <button className='arrowButton' onClick={backPage}><ArrowBackIosNewRoundedIcon /></button>
             <ul>
                 {
-                    products.pages ? products.pages[page].map(product => (
+                   products.pages.length > 0 ? products.pages[page].map(product => (
                         <li key={product.id}>
-                            <Card id={product.id} title={product.title} price={product.price} imgUrl={product.imgs[0]} fav={product.fav}/>
+                            <Card id={product.id} setUpdateCard={setUpdateCard} updateCard={updateCard} title={product.title} price={product.price} imgUrl={product.imgs[0]} fav={product} ingredients={product.ingredients} describe={product.describe}/>
                         </li>
-                    )): <h2>Nenhum produto encontrado!</h2>
+                    )): <h2 className='empty'>Nenhum produto encontrado!</h2>
                 }
             </ul>
             <button className='arrowButton' onClick={nextPage}><ArrowForwardIosRoundedIcon /></button>
