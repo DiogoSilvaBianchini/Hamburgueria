@@ -11,7 +11,7 @@ module.exports = {
     "pool": {
       max: 10,
       min: 1,
-      acquire: 90000,
+      acquire: 30000,
       idle: 10000
     }
   },
@@ -25,7 +25,7 @@ module.exports = {
     "pool": {
       max: 10,
       min: 1,
-      acquire: 90000,
+      acquire: 30000,
       idle: 10000
     }
   }
