@@ -4,11 +4,11 @@ import SlideCards from "../../components/slideCards/SlideCards"
 import useFetch from "../../hooks/useFetch"
 import Carrosel from "../../components/Carrosel/Carrosel"
 
-
 const Home = () => {
   const {data} = useFetch(`product`, "GET")
   
   const {data: productsOrderTime} = useFetch("product/filter/time", "GET")
+
   return (
     <div className="homeContainer">
       <Carrosel />

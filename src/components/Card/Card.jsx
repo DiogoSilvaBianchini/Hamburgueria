@@ -20,7 +20,6 @@ const Card = ({id, title, price, imgUrl, ingredients, describe, setUpdateCard, u
     dispatch(agreeProduct({id, title, price, imgUrl,quant: 1}))
     if(btn.className.includes("moveCart")){
       btn.classList.remove("moveCart")
-      console.log(btn.className)
     }
     btn.classList.add("activeButton")
     setBlocekdBtn(true)
@@ -39,12 +38,15 @@ const Card = ({id, title, price, imgUrl, ingredients, describe, setUpdateCard, u
   }
 
   useEffect(() => {
-    let isFavority = localStorage.getItem("Fav").split(",")
-    isFavority.map(idFav => {
-      if(idFav == id){
-        setFav(true)
-      }
-    })
+    let isFavority = localStorage.getItem("Fav")
+    if(isFavority){
+      let favoritys = isFavority.split(",")
+      favoritys.map(idFav => {
+        if(idFav == id){
+          setFav(true)
+        }
+      })
+    }
   },[id, fav, updateCard])
 
   const addFav = () => {

@@ -17,6 +17,7 @@
     width: 100%;
     display: flex;
     align-items: flex-start;
+    gap: 16px;
 }
 
 .products-container .search-container label{
@@ -28,7 +29,8 @@
     font-family: var(--principal-font);
 }
 
-.products-container .search-container label input{
+.products-container .search-container label input, .products-container .search-container label select{
+    height: 30px;
     padding: 4px 2px;
     border: 2px solid orange;
     border-radius: 4px;

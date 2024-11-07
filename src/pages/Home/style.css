@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: space-between;
     margin-top: 8px;
+    margin-bottom: 16px;
 }
 
 .homeContainer .categorys{
@@ -16,6 +17,8 @@
     border-radius: 25px;
     padding: 16px 32px;
     margin-top: 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
 }
 
 .homeContainer .categorys .card-category{
@@ -66,4 +69,3 @@
         font-size: 2rem;
     }
 }
-

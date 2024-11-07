@@ -36,3 +36,20 @@
 .category-container span.active{
     color: #222;
 }
+
+@media (max-width: 800px) {
+    .category-container{
+        width: 60px;
+        margin: 0px 16px;
+    }
+
+    .category-container .img-container{
+        width: 72px;
+        height: 72px;
+    }
+
+    .category-container .img-container img{
+        min-width: 48px;
+        width: 52px;
+    }
+}

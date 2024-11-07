@@ -3,7 +3,8 @@ import './style.css'
 import Card from '../../components/Card/Card'
 import useFetch from '../../hooks/useFetch'
 import EmptySearch from '../../components/EmptySearch/EmptySearch'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setCategory } from '../../redux/categorySearchSlice'
 
 const Menu = () => {
     const [search, setSearch] = useState('')
@@ -11,12 +12,12 @@ const Menu = () => {
 
     const {data} = useFetch("product", "GET")
     const {category} = useSelector(state => state.categorySearch)
-    
+    const dispatch = useDispatch()
+
     useEffect(() => {
-        if(category && data){
+        if(data && category){
             const filtread = data.filter(product => product.Category.name == category)
             setProducts(filtread)
-            console.log(filtread)
         }else if(data){
             setProducts(data)
         }
@@ -41,6 +42,15 @@ const Menu = () => {
             <label htmlFor="search">
                 <span>Buscar:</span>
                 <input type="text" autoComplete='off' value={search} onChange={(e) => setSearch(e.target.value)} id='search'/>
+            </label>
+            <label htmlFor="categorySelector">
+                <span>Categoria</span>
+                <select id='categorySelector' onChange={(e) => dispatch(setCategory({category: e.target.value}))}>
+                    <option value="">Buscando por uma categoria...</option>
+                    <option value="lanches">Lanches</option>
+                    <option value="aperitivos">Aperitivos</option>
+                    <option value="bebidas">Bebidas</option>
+                </select>
             </label>
         </div>
         <ul className="products-list">

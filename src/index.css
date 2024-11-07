@@ -67,6 +67,10 @@ button{
   border-color: transparent;
 }
 
+select:focus{
+  outline: none;
+}
+
 .darkBtn{
   background-color: #222;
   color: #fff;

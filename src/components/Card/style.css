@@ -99,32 +99,8 @@
     font-size: 24px;
 }
 
-.moveCart:hover svg{
-    animation: startMove .8s linear;
-  }
-
-@keyframes startMove{
-    0%{
-        transform: translateX(0px);
-    }
-    25%{
-        transform: translateX(40px);
-    }
-    40%{
-        color: #fff;
-    }
-    50%{
-        color: #fff;
-        transform: translateX(0px);
-    }
-    66%{
-        color: #fff;
-    }
-    75%{
-        transform: translateX(-50px);
-    }
-    100%{
-        transform: translateX(0px);
+@media(max-width: 800px){
+    .productCard{
+        width: 200px;
     }
 }
-

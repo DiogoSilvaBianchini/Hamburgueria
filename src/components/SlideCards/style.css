@@ -7,12 +7,11 @@
     justify-content: space-evenly;
     gap: 24px;
     background-color: #fff;
-    padding: 8px 16px;
+    padding: 4px 16px;
     border-radius: 16px;
 }
 
 .slideCards > h2{
-    margin-left: 55px;
     font-weight: 800;
     color: #222;
     font-size: 1.5rem;
@@ -23,8 +22,8 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    gap: 16px;
+    justify-content: space-between;
+    gap: 4px;
 }
 
 .slideCards ul{
@@ -35,4 +34,35 @@
     gap: 32px;
     padding: 16px 0px;
     overflow-x: auto;
+    scroll-behavior: smooth;
+    border-radius: 16px;
+}
+
+.slideCards ul::-webkit-scrollbar{
+    height: 8px;
+}
+
+.slide ul::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 16px;
+}
+
+.slide ul::-webkit-scrollbar-thumb{
+    background-color: #222;
+    border-radius: 16px;
+}
+
+@media(max-width: 800px) {
+    .slideCards{
+        align-items: center;
+    }
+
+    .slideCards h2{
+        margin: 0;
+    }
+
+    .slideCards ul{
+        gap: 8px;
+        scrollbar-width: none;
+    }
 }
