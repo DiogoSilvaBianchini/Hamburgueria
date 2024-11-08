@@ -1,9 +1,8 @@
 import './style.css'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import LunchDiningRoundedIcon from '@mui/icons-material/LunchDiningRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
-import AddShoppingCartRoundedIcon from '@mui/icons-material/AddShoppingCartRounded';
 import {useDispatch, useSelector} from 'react-redux'
 import { setCategory } from '../../redux/categorySearchSlice';
 import CartPopUp from '../CartPopUp/CartPopUp';
@@ -16,6 +15,7 @@ const Header = () => {
   const {products} = useSelector(state => state.cartSlice)
 
   const dispatch = useDispatch()
+  const location = useLocation()
 
   const cleanSearch = () => {
     if(category){
@@ -30,8 +30,8 @@ const Header = () => {
   
     const totalValueProducts = isTotalByProduct.reduce((acc, curr) => acc + curr, 0)
     setTotalValue(totalValueProducts)
-    totalValueProducts > 0 && setactivePopUp(true)
-  }, [products])
+    totalValueProducts > 0 && location.pathname !== "/cart" && setactivePopUp(true)
+  }, [products, location])
 
   return (
     <header>

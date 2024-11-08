@@ -16,6 +16,12 @@
     border-radius: 8px;
     animation: move-left .4s linear forwards;
     z-index: 1000;
+    transition: .4s;
+    cursor: pointer;
+}
+
+.add-item-container:hover{
+    background-color: rgb(190, 0, 0);
 }
 
 .add-item-container span{
