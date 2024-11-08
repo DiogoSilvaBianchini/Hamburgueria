@@ -4,8 +4,17 @@ import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 import Cart from './pages/Cart/Cart'
 import Menu from './pages/Menu/Menu'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { loadProducts } from './redux/productList'
 
 const App = () => {
+  const dispath = useDispatch()
+
+  useEffect(() => {
+    dispath(loadProducts())
+  }, [dispath])
+
   return (
     <BrowserRouter>
       <Header />

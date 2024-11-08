@@ -1,0 +1,48 @@
+.add-item-container{
+    width: 400px;
+    height: 60px;
+    position: fixed;
+    top: 25px;
+    right: 0px;
+    background-color: #0db4a1;
+    padding: 8px 8px;
+    border-left: 4px solid #333;
+    color: #fff;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 4px;
+    border-radius: 8px;
+    animation: move-left .4s linear forwards;
+    z-index: 1000;
+}
+
+.add-item-container span{
+    font-family: var(--principal-font);
+    font-size: 16px;
+}
+
+.add-item-container span.small-text{
+    font-size: 12px;
+}
+
+.removePopUp{
+    animation: move-rigth .4s linear forwards;
+}
+
+@keyframes move-left{
+    from{
+        right: -400px;
+    }to{
+        right: 0px;
+    }
+}
+
+@keyframes move-rigth{
+    from{
+        right: 0px;
+    }to{
+        right: -400px;
+    }
+}

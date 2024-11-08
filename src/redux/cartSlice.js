@@ -3,16 +3,19 @@ import { createSlice } from "@reduxjs/toolkit";
 const slice = createSlice({
     name: "cartManager",
     initialState: {
-        products: []
+        products: [],
+        lastItem: ""
     },
     reducers: {
         agreeProduct(state, {payload}){
             const filterProduct = state.products.find(product => product.title == payload.title)
+            
             if(filterProduct){
                 filterProduct.quant += 1
             }else{
                 state.products = [...state.products, payload]
             }
+            state.lastItem = payload
         },
 
         updateProduct(state, {payload}){

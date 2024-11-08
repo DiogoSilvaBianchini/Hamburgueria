@@ -9,7 +9,7 @@ const useRequest = () => {
 
         const response = await req.json()
 
-        return response
+        return response.results
     } 
 
 

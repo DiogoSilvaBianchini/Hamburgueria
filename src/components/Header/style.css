@@ -31,3 +31,22 @@ header .linkList a{
 header .linkList a.active{
     width: 100px;
 }
+
+.initial{
+    animation: move-left 1s linear forwards;
+}
+
+.stage{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+@keyframes move-left{
+    to{
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    from{
+        transform: translateX(0px);
+    }
+}

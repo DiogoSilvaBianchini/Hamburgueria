@@ -17,15 +17,42 @@
     width: 100%;
     display: flex;
     align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px 32px;
+}
+
+.products-container .search-container label, .products-container .search-container .priceButtons{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.products-container .search-container .priceButtons .row{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     gap: 16px;
 }
 
-.products-container .search-container label{
+.products-container .search-container .priceButtons .row button{
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    color: #aaa;
+    transition: .4s;
+    padding: 0px 8px;
+    max-width: 130px;
+    height: 32px;
 }
 
-.products-container .search-container label span{
+.products-container .search-container .priceButtons .row button.active{
+    background-color: var(--active-color);
+    color: #fff;
+    transition: .4s;
+}
+
+.products-container .search-container span{
     font-family: var(--principal-font);
 }
 

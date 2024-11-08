@@ -8,7 +8,7 @@ import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlin
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ProductInfo from '../ProductInfo/productInfo';
 
-const Card = ({id, title, price, imgUrl, ingredients, describe, setUpdateCard, updateCard}) => {
+const Card = ({id, title, price, imgUrl, ingredients, describe}) => {
   const dispatch = useDispatch()
   const [blockedBtn, setBlocekdBtn] = useState(false)
   const [infoScreen, setInforScreen] = useState(false)
@@ -47,7 +47,7 @@ const Card = ({id, title, price, imgUrl, ingredients, describe, setUpdateCard, u
         }
       })
     }
-  },[id, fav, updateCard])
+  },[id, fav])
 
   const addFav = () => {
     let isFavority = localStorage.getItem("Fav")
@@ -65,7 +65,6 @@ const Card = ({id, title, price, imgUrl, ingredients, describe, setUpdateCard, u
         localStorage.setItem("Fav", updateList)
         setFav(false)
       }
-      setUpdateCard(fav)
     }
   }
 
