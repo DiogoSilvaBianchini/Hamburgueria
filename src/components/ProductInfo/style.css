@@ -101,3 +101,12 @@
 .product-info-contaier .product-info .content-product .iconBtn:hover{
     background-color: rgb(224, 0, 0);
 }
+
+@media (max-width: 800px) {
+    .product-info-contaier .product-info{
+        top: -30px;
+        width: 90%;
+        height: 90%;
+        flex-direction: column;
+    }
+}

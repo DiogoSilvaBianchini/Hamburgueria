@@ -52,3 +52,22 @@
     color: red;
     background-color: transparent;
 }
+
+@media(max-width: 800px){
+    .cartContainer .productsContainer .productCard li .rowTitle{
+        gap: 4px;
+    }
+    .cartContainer .productsContainer .productCard li .rowTitle h2{
+        width: 60px;
+        font-size: 14px;
+    }
+
+    .cartContainer .productsContainer .productCard li span{
+        font-size: 14px;
+    }
+    
+    .cartContainer .productsContainer .productCard li .rowTitle .productImage{
+        width: 60px;
+        height: 50px;
+    }
+}

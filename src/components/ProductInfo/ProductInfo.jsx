@@ -34,7 +34,7 @@ const ProductInfo = ({addCart, title, describe, img, ingredients, closeWindow}) 
                   </ul>
                 </div>
                 <div className="row">
-                  <button className="orangeBtn" onClick={addCart}><AddShoppingCartRoundedIcon /> Adicionar ao carrinho</button>
+                  <button className="orangeBtn" onClick={addCart}><AddShoppingCartRoundedIcon /></button>
                 </div>
                 <button className="iconBtn" onClick={closeFullScreen}><CloseRoundedIcon /></button>
             </div>

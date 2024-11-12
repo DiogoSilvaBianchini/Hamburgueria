@@ -38,13 +38,13 @@ const Header = () => {
         <img src='/logo48x48.webp' alt='"Logo Burguer Smith'/>
         <ul className='linkList'>
           <li>
-            <NavLink onClick={cleanSearch} to="/" className={({isActive}) => isActive ? "active": ""}><HomeRoundedIcon /> Home</NavLink>
+            <NavLink onClick={cleanSearch} to="/" className={({isActive}) => isActive ? "home active": "home"}><HomeRoundedIcon /> Home</NavLink>
           </li>
           <li>
             <NavLink onClick={cleanSearch} to="/menu" className={({isActive}) => isActive ? "active": ""}><LunchDiningRoundedIcon /> Cardápio</NavLink>
           </li>
           <li>
-            <NavLink onClick={cleanSearch} to="/cart" className={({isActive}) => isActive ? "active": ""}><ShoppingCartRoundedIcon /> Carrihno</NavLink>
+            <NavLink onClick={cleanSearch} to="/cart" className={({isActive}) => isActive ? "cart active": ""}><ShoppingCartRoundedIcon /> Carrinhno</NavLink>
           </li>
         </ul>
         {

@@ -38,7 +38,6 @@
 .productCard .productImage img{
     width: 100%;
     height: 100%;
-    
     border-radius: 8px;
 }
 
@@ -101,6 +100,10 @@
 
 @media(max-width: 800px){
     .productCard{
+        width: 150px;
+    }
+    .productCard .productImage img{
         width: 200px;
+        height: 100px;
     }
 }

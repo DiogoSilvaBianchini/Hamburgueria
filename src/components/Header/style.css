@@ -19,34 +19,25 @@ header .linkList{
 }
 
 header .linkList a{
-    width: 25px;
+    width: 48px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: 8px;
     overflow-x: hidden;
-    transition: .8s;
+    transition: .6s ;
+    gap: 24px;
 }
 
 header .linkList a.active{
     width: 100px;
+    gap: 8px;
 }
 
-.initial{
-    animation: move-left 1s linear forwards;
+header .linkList a.home.active{
+    width: 80px;
 }
 
-.stage{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-@keyframes move-left{
-    to{
-        transform: translateX(400px);
-        opacity: 0;
-    }
-    from{
-        transform: translateX(0px);
-    }
+header .linkList a.cart.active{
+    width: 110px;
 }

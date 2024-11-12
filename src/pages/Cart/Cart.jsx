@@ -17,7 +17,7 @@ const Cart = () => {
     const { products } = useSelector(state => state.cartSlice)
     const [valueTotal, setValueTotal] = useState(0)
     const {httpRequest} = useRequest()
-
+    
     const checkShippingPrice = async () => {
        if(cep){
             setLoad(true)
@@ -73,6 +73,10 @@ const Cart = () => {
                     </li>
                 }
             </ul>
+            <div className="mobile-info">
+                <h3>Valor total: R$ {valueTotal}</h3>
+                <button className='darkBtn' onClick={createChckOut}>Comprar carrinho</button>
+            </div>
         </div>
         <div className="productValue">
             <h2><InfoOutlinedIcon />Infomações da compra</h2>

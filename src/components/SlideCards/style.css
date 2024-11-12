@@ -54,7 +54,7 @@
 
 @media(max-width: 800px) {
     .slideCards{
-        align-items: center;
+        align-items: flex-start;
     }
 
     .slideCards h2{

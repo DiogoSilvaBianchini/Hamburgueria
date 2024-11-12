@@ -1,6 +1,6 @@
 .products-container{
     width: 90%;
-    height: 500px;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,7 +10,7 @@
     margin-top: 16px;
     background-color: #fff;
     border-radius: 25px;
-    padding: 24px;
+    padding: 16px;
 }
 
 .products-container .search-container{
@@ -72,4 +72,30 @@
     justify-content: flex-start;
     gap: 4px;
     overflow-y: auto;
+}
+
+@media (max-width: 800px) {
+    .products-container .search-container{
+        width: 100%;
+        gap: 16px;
+    }
+    .products-container .search-container label{
+        width: 100%;
+    }
+    .products-container .search-container input,.products-container .search-container select{
+        width: 100%;
+        background-color: #fff;
+    }
+    .priceButtons{
+        width: 100%;
+    }
+    .products-container .search-container .priceButtons .row{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .products-container .search-container .priceButtons button{
+        width: auto;
+    }
 }

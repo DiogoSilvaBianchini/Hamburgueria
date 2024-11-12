@@ -25,6 +25,10 @@ footer img{
     width: 50px;
 }
 
+footer.none{
+    display: none;
+}
+
 @media(max-width: 800px) {
     footer img{
         width: 100px;

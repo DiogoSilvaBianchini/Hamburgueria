@@ -28,7 +28,7 @@ const Menu = () => {
 
 
     useEffect(() => {
-        if(category){
+        if(category && data){
             const filtread = data.filter(product => product.Category.name.toLowerCase().includes(category))
             setCategoryFilter(filtread)
             setProducts(filtread)
@@ -89,7 +89,7 @@ const Menu = () => {
             <label htmlFor="categorySelector">
                 <span>Categoria</span>
                 <select id='categorySelector' value={category} onChange={(e) => dispatch(setCategory({category: e.target.value}))}>
-                    <option value="">Buscando por uma categoria...</option>
+                    <option value="">Buscando por uma categoria</option>
                     <option value="lanches">Lanches</option>
                     <option value="aperitivos">Aperitivos</option>
                     <option value="sobremesas">Sobremesas</option>
@@ -110,7 +110,7 @@ const Menu = () => {
             {
                 products.length > 0 ? products.map(product => (
                     <li key={product.id}>
-                        <Card title={product.title} imgUrl={product.imgs[0]} price={product.price} id={product.id}/>
+                        <Card title={product.title} ingredients={product.ingredients} imgUrl={product.imgs[0]} price={product.price} id={product.id}/>
                     </li>
                 )):<EmptySearch />
             }

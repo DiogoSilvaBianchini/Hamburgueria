@@ -65,6 +65,7 @@ button{
   font-family: var(--principal-font);
   padding: 2px;
   border-color: transparent;
+  outline: none;
 }
 
 select:focus{
@@ -89,7 +90,7 @@ select:focus{
   transition: .2s;
 }
 
-.orangeBtn:hover{
+.orangeBtn:focus{
   background: #fff;
   color: #FE6611;
   border-color: #FE6611;
