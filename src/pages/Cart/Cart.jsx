@@ -53,8 +53,9 @@ const Cart = () => {
             return {id: product.id, quantity: product.quant}
         })
         
-        const res = await httpRequest("product/payment", "post", {productList})
-        window.location.href = res.results
+        const urlCheckout = await httpRequest("product/payment", "post", {productList})
+
+        window.location.href = urlCheckout
     }
 
   return (
