@@ -94,7 +94,10 @@ class ProductController{
                 product: stripeProduct.id
             })
 
+            console.log(priceProduct.id)
+
             await services.createNewRegister({title, describe, price, ingredients: ingredients.split(','), categoryId: Number(categoryId), imgs: imgsKeyAws, stripe_product_ID: stripeProduct.id, stripe_price_ID: priceProduct.id})
+
             return res.status(201).json({results: "Produto adicionado com sucesso", status: 201})
         } catch (error) {
             removeImageByKey(imgsKeyAws)
@@ -103,12 +106,11 @@ class ProductController{
     }
 
     static async updateProduct(req,res,next){
-        const {title, describe, price, categoryId} = req.body
+        const {title, describe, price, categoryId, ingredients} = req.body
         const imgs = req.files
         const {id} = req.params
         const payload = {}
         try {
-
             if(title){
                 payload.title = title
             }
@@ -120,6 +122,10 @@ class ProductController{
             if(price){
                 payload.price = price
             }
+            if(ingredients){
+                const list = ingredients.split(",")
+                payload.ingredients = list
+            }
             if(categoryId){
                 payload.categoryId = categoryId
             }
@@ -129,6 +135,7 @@ class ProductController{
             }
 
             if(Object.keys(payload).length > 0){
+                console.log(payload)
                 await services.updateById(id, payload)
                 return res.status(201).json({results: "Produto atualizado com sucesso", status: 201})
             }else{

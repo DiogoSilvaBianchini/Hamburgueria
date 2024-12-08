@@ -17,7 +17,6 @@ class Services{
     async findOne(querry){
         try {
             let results = await db[this.model].findOne(querry)
-            if(!results) results = []
             
             return results
         } catch (error) {

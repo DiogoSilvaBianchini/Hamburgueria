@@ -27,9 +27,18 @@ class UserController{
         }
     }
 
-    static async createToken (req,res,next){
+    static async createToken (payload, req,res,next){
         try {
-            const token = await jwt.sign(req.payload, process.env.SECRET_TOKEN, {expiresIn: "4h"})
+            const token = await jwt.sign(payload, process.env.SECRET_TOKEN, {expiresIn: "12h"})
+            return res.status(200).json({results: token, status: 200})
+        } catch (error) {
+            next(error)   
+        }
+    }
+
+    static async createRecoverToken (payload, req, res, next){
+        try {
+            const token = await jwt.sign(payload, process.env.SECRET_TOKEN_RECOVER, {expiresIn: "30m"})
             return res.status(200).json({results: token, status: 200})
         } catch (error) {
             next(error)   
@@ -79,9 +88,25 @@ class UserController{
                 text: `Código de acesso: ${code}`
             })
             
-            return res.status(200).json({results: "E-mail enviado com sucesso!", status: 200})
+            next(payload)
         } catch (error) {
            next(error) 
+        }
+    }
+
+    static async checkEmail(req,res,next){
+        const {email} = req.body
+        try {
+            const findEmail = await service.findOne({where: {email}})
+
+            if(findEmail){
+                const payload = {id: findEmail.id, email: findEmail.email}
+                next(payload)
+            }else{
+                return res.status(400).json({msg: "Email não encontrado", results: [], status: 400})
+            }
+        } catch (error) {
+            next(error)
         }
     }
 
@@ -110,8 +135,8 @@ class UserController{
 
                 return res.status(401).json({msg: "Código incorreto", results: false, status: 401})
             }
-            const token = {...payload}
-            return next(token)
+            
+            return res.status(200).json({msg: "Código incorreto", results: true, status: 200})
         } catch (error) {
             next(error)
         }
@@ -138,7 +163,7 @@ class UserController{
     static async updateUser(token, req, res, next){
         const {email, password} = req.body
         const payload = {}
-        console.log(token.id)
+
         if(email){
             payload.email = email
         }

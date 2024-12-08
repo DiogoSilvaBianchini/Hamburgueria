@@ -39,15 +39,14 @@ const authUser = async (req,res,next) => {
                 email
             }
         })
-
-        if(user.length == 0) return res.status(401).json({results: "E-mail ou senha incorreto"})
+        
+        if(!user) return res.status(401).json({results: "E-mail ou senha incorreto", status: 401})
 
         const compare = await bcryptjs.compare(password, user.password)
         
         if(compare){
             const payload = {id: user.id, email: user.email}
-            req.payload = payload
-            next()
+            next(payload)
         }else{
             return res.status(401).json({results: "E-mail ou senha incorreto", status: 401})
         }
@@ -76,15 +75,14 @@ const checkin = async (req, res, next) => {
         const bearerToken = authorization.split(" ", 2)[1]
         const token = await jwt.verify(bearerToken, process.env.SECRET_TOKEN)
         const user = await service.findOne({where: {email: token.email}})
-        
         if(user){
             const payLoad = {id: user.id, name: user.name, email: user.email}
             return res.status(200).json({msg: "Token authenticado", results: payLoad, status: 200})
         }else{
-            return res.status(401).json({msg: "Token inválido", results: false, status: 200})
+            return res.status(401).json({msg: "Token inválido", results: false, status: 401})
         }
     } catch (error) {
-        return res.status(401).json({msg: "Token inválido", results: false, status: 200})
+        return res.status(401).json({msg: "Token inválido", results: false, status: 401})
     }
 }
 
@@ -92,7 +90,7 @@ const checkinNext = async (req,res,next) => {
     const {authorization} = req.headers
     try {
         const bearerToken = authorization.split(" ", 2)[1]
-        const token = await jwt.verify(bearerToken, process.env.SECRET_TOKEN)
+        const token = await jwt.verify(bearerToken, process.env.SECRET_TOKEN_RECOVER)
 
         const user = await service.findOne({where: {id: token.id}})
 

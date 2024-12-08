@@ -4,12 +4,12 @@ const express = require("express")
 const router = require("./src/routes")
 const {sequelize} = require("./src/database/postgress/models")
 
-const app = express()
 const PORT = process.env.PORT
+const app = express()
+
 config()
 
-sequelize.sync({after: true}).then(() => {
-    console.log("Banco de dados 1 connectado")
+sequelize.sync({alter: true}).then(() => {
     mongoConnection(app)
     router(app)
 }).catch(err => {

@@ -18,7 +18,7 @@ const mongoConnection = () => {
     mongoose.connection.on("error", (error) => {
         console.log(error)
     })
-    mongoose.connection.once("open", () => console.log("Banco de dados 2 connectado"))
+    mongoose.connection.once("open", () => console.log("Banco de dados connectado"))
 
 }
 
