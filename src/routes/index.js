@@ -1,4 +1,5 @@
 const adminRoutes = require("./adminRoutes.js")
+const userRoutes = require("./userRoutes.js")
 const productRouter = require("./productRouter")
 const categoryRouter = require("./categoryRoutes")
 const morgan = require("morgan")
@@ -15,6 +16,7 @@ module.exports = routes = (app) => {
     //Routes de Serviço
     app.use(
         morgan("dev"), 
+        userRoutes,
         adminRoutes, 
         productRouter, 
         categoryRouter

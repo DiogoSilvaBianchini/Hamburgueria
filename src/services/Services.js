@@ -53,7 +53,7 @@ class Services{
 
     async removeById(id){
         try {
-            await db[this.model].destroy({where: {id: Number(id)}})
+            await db[this.model].destroy({where: {id: id}})
             return true
         } catch (error) {
             throw new Error(error)
