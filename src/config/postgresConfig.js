@@ -13,7 +13,8 @@ module.exports = {
       min: 1,
       acquire: 30000,
       idle: 10000
-    }
+    },
+    "timezone": "-03:00"
   },
   "production": {
     "username": process.env.DB_POSTGRES_USER_NAME,
@@ -27,6 +28,7 @@ module.exports = {
       min: 1,
       acquire: 30000,
       idle: 10000
-    }
+    },
+    "timezone": "-03:00"
   }
 }

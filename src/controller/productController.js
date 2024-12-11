@@ -196,7 +196,7 @@ class ProductController{
             })
 
             const session = await stripe.checkout.sessions.create({
-                success_url: 'http://localhost:5173/cart',
+                success_url: `${process.env.URL_FRONTEND_CLIENT}/PaymentConfirmed`,
                 line_items: items,
                 mode: 'payment'
             })

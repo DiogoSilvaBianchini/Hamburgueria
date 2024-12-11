@@ -5,7 +5,7 @@ const mailerConfig = require("../config/nodeMailerConfig")
 
 const Service = require("../services/Services")
 const recoverModel = require("../database/mongoDB/model/recoverSchema")
-const service = new Service("User")
+const service = new Service("admin")
 
 class UserController{
     static async getAllUsers(req,res,next){
@@ -29,6 +29,11 @@ class UserController{
 
     static async createToken (payload, req,res,next){
         try {
+            const { expire } = req.body
+            let duration = {}
+            
+            if(expire) return duration = {expiresIn: "12h"}
+
             const token = await jwt.sign(payload, process.env.SECRET_TOKEN, {expiresIn: "12h"})
             return res.status(200).json({results: token, status: 200})
         } catch (error) {

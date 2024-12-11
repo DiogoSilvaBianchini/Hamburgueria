@@ -2,7 +2,7 @@ const bcryptjs = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const Service = require("../services/Services")
 const { Joi } = require("express-validation")
-const service = new Service("User")
+const service = new Service("admin")
 
 const encryptedPassword = async (password) => {
     try {

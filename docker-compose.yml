@@ -25,6 +25,13 @@ services:
       MONGO_INITDB_DATABASE: burguer
       MONGO_INITDB_ROOT_USERNAME: entropia
       MONGO_INITDB_ROOT_PASSWORD: admin123
+  db_redis:
+    container_name: Redis
+    image: redis/redis-stack-server:latest
+    ports:
+      - 6379:6379
+    volumes:
+      - ./databases/redis:/data redis/redis-stack-server:latest
   api:
     image: node:latest
     container_name: api
