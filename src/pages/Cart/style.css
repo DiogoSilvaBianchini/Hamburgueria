@@ -160,6 +160,10 @@
     padding: 8px;
 }
 
+.number-save span input{
+    margin-right: 8px;
+}
+
 .mobile-info{
     display: none;
     position: absolute;

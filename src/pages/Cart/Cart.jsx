@@ -14,10 +14,16 @@ const Cart = () => {
     const [shippingPrice, setShippingPrice] = useState("")
     const [cep, setCep] = useState("")
     const [load, setLoad] = useState(false)
+    const [error, setError] = useState("")
+    const [contact, setContact] = useState("")
     const { products } = useSelector(state => state.cartSlice)
     const [valueTotal, setValueTotal] = useState(0)
     const {httpRequest} = useRequest()
     
+    const warning = () => {
+        setError("Insira um numero para contato.")
+    }
+
     const checkShippingPrice = async () => {
        if(cep){
             setLoad(true)
@@ -50,12 +56,30 @@ const Cart = () => {
 
     const createChckOut = async () => {
         const productList = products.map(product => {
-            return {id: product.id, quantity: product.quant}
+            return {id: product.id, product: product.title, quantity: product.quant}
         })
         
+        const order = {
+            productList,
+            info: {
+                status: "Pagamento pendente", clientContact: contact
+            }
+        }
+
+        localStorage.setItem("listItens", JSON.stringify(order))
         const urlCheckout = await httpRequest("product/payment", "post", {productList})
 
         window.location.href = urlCheckout
+    }
+
+    useEffect(() => {
+        if(contact.length > 10){
+            setError("")
+        }
+    },[contact])
+
+    const saveNumber = (phone) => {
+        
     }
 
   return (
@@ -108,8 +132,22 @@ const Cart = () => {
                 </>
             }
             <div className="columnMenu">
+                <label>
+                    <span className={error && "textError"}>Numero para contato</span>
+                    <input type="text" className={error && "fieldError"} value={contact} onChange={(e) => !isNaN(e.target.value) && setContact(e.target.value)}/>
+                    <span className='textError'>{error}</span>
+                </label>
+                <label htmlFor='phoneNumber' className='number-save'>
+                    <span>
+                        <input type="checkbox" name="phoneNumber" id="phoneNumber" onChange={(e) => saveNumber(e.target.value)}/> 
+                         Salvar meu número para proximas compras
+                    </span>
+                </label>
                 <h3>Valor total: R$ {valueTotal}</h3>
-                <button className='darkBtn' onClick={createChckOut}>Comprar carrinho</button>
+                {
+                    contact.length > 10 ? <button className='darkBtn' onClick={createChckOut}>Comprar carrinho</button>:
+                    <button className='disableBtn' onClick={warning}>Comprar carrinho</button>
+                }
             </div>
         </div>
     </div>

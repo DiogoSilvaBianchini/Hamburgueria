@@ -7,6 +7,7 @@ import Menu from './pages/Menu/Menu'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { loadProducts } from './redux/productList'
+import PaymentConfirmed from './pages/PaymentConfirmed/PaymentConfirmed'
 
 const App = () => {
   const dispath = useDispatch()
@@ -22,6 +23,7 @@ const App = () => {
         <Route path='/' element={<Home />}/>
         <Route path='/menu' element={<Menu />}/>
         <Route path='/cart' element={<Cart />}/>
+        <Route path='/PaymentConfirmed' element={<PaymentConfirmed />}/>
       </Routes>
       <Footer />
     </BrowserRouter>

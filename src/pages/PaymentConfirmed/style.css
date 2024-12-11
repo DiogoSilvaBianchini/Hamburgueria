@@ -1,0 +1,27 @@
+.confirmed_payment{
+    width: 100%;
+    height: 77.6vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.confirmed_payment > svg{
+    font-size: 250px;
+    color: rgb(0, 170, 0);
+}
+
+.confirmed_payment span{
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+}
+
+.confirmed_payment button{
+    border-radius: 16px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}

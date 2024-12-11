@@ -88,6 +88,7 @@ select:focus{
   border: 2px solid transparent;
   padding: 8px 0px;
   transition: .2s;
+  border: 2px solid #FE6611
 }
 
 .orangeBtn:focus{
@@ -96,6 +97,10 @@ select:focus{
   border-color: #FE6611;
 }
 
+.orangeBtn:hover{
+  color: #FE6611;
+  background-color: transparent;
+}
 
 .activeButton{
   animation: clickBtn 1s linear;
@@ -115,6 +120,11 @@ select:focus{
   padding: 8px 0px;
 }
 
+.disableBtn{
+  background-color: #ccc;
+  color: #eee;
+}
+
 .loadButton{
   background-color: #fff;
   border: 3px solid #eee;
@@ -127,6 +137,15 @@ select:focus{
 
 .loadButton svg{
   animation: spinLoad 1s linear infinite;
+}
+
+.textError{
+  color: #e01b1b;
+  font-size: 14px;
+}
+
+.fieldError{
+  border: 1px solid #e01b1b;
 }
 
 @keyframes spinLoad{
