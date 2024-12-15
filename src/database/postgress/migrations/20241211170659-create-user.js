@@ -18,6 +18,14 @@ module.exports = {
       phone: {
         type: Sequelize.STRING
       },
+      cep: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      number_house: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       buy_list: {
         type: Sequelize.ARRAY(Sequelize.STRING)
       },

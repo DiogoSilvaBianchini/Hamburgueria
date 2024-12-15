@@ -70,7 +70,16 @@ class ProductController{
 
     static async findAllProduct(req, res, next){
         try {
-            const products = await services.findAll(populateCategory)
+            const quarry = {
+                attributes: ["id","title", "describe", "price", "categoryId", "ingredients", "imgs"],
+                include: [
+                    {
+                        model: db.Category,
+                        attributes: ["name"],
+                    }
+                ]
+            }
+            const products = await services.findAll(quarry)
             return res.status(200).json({results: products, status: 200})
         } catch (error) {
             next(error)

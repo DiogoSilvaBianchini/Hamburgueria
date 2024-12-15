@@ -2,9 +2,19 @@ const { v4 } = require("uuid")
 const Service = require("../services/Services")
 const updateBodyCreator = require("../utils/updateBodyCreator")
 const userModel = new Service("user")
+const jwt = require("jsonwebtoken")
+
+
+const createToken = async (payload) => {
+    try {
+        const token = await jwt.sign({payload}, process.env.CLIENT_SECRET_KEY)
+        return token
+    } catch (error) {
+        throw new Error
+    }
+}
 
 class UserController{
-
     static async getAllUsers(req,res,next){
         try {
             const search = await userModel.findAll()
@@ -28,11 +38,49 @@ class UserController{
         }
     }
 
+    static async getUserByEmail(req,res,next){
+        const {email} = req.body
+        try {
+            const search = await userModel.findOne({where: {email}})
+            
+            if(!search){
+                return res.status(401).json({msg: "Usuario não encontrado", results: false, status: 401})
+            }
+
+            const token = await createToken({name: search.email})
+            return res.status(200).json({msg: "Usuario encontrado com sucesso!", results: {user: search, token}, status: 200})
+        } catch (error) {
+            
+        }
+    }
+
+    static async validateToken(req,res,next){
+        try {
+            const token = req.headers.authorization
+            const validate = await jwt.verify(token, process.env.CLIENT_SECRET_KEY)
+            if(!validate) return res.status(401).json({msg: "Token inválido", results: false, status: 401})
+
+            const {email} = await jwt.decode(token)
+            const searchUser = await userModel.findOne({email})
+            
+            if(searchUser){
+                return res.status(200).json({msg: "Usuario encontrado com sucesso!", results: searchUser, status: 200})
+            }else{
+                return res.status(401).json({msg: "Usuario não encontrado!", results: false, status: 401})
+            }
+        } catch (error) {
+            next(error)
+        }
+    }
+
     static async createNewUser(req,res,next){
         try {
-            const {name, email, phone} = req.body
-            await userModel.createNewRegister({name, email, phone})
-            return res.status(201).json({msg: "Usuario criado com sucesso", results: true, status: 201})
+            const {name, email, phone, cep, numberHouse } = req.body
+            await userModel.createNewRegister({name, email, phone, cep, number_house:numberHouse})
+
+            const token = await jwt.sign({email}, process.env.CLIENT_SECRET_KEY)
+
+            return res.status(201).json({msg: "Usuario criado com sucesso", results: token, status: 201})
         } catch (error) {
             next(error)
         }

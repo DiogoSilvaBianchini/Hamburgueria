@@ -32,6 +32,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    cep: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    number_house: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     buy_list:{
       type: DataTypes.ARRAY(DataTypes.STRING)
     } 
