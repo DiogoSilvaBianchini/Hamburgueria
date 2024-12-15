@@ -8,21 +8,26 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import CartCard from '../../components/CartCard/CartCard';
 import useRequest from '../../hooks/useRequest';
+import Cookies from 'js-cookie'
+import RegisterNewUser from '../../components/RegisterNewUser/RegisterNewUser';
+import {v4} from 'uuid'
 
-const Cart = () => {
+const Cart = ({socket}) => {
     const [delivery, setDelivery] = useState(false)
     const [shippingPrice, setShippingPrice] = useState("")
     const [cep, setCep] = useState("")
     const [load, setLoad] = useState(false)
-    const [error, setError] = useState("")
-    const [contact, setContact] = useState("")
     const { products } = useSelector(state => state.cartSlice)
     const [valueTotal, setValueTotal] = useState(0)
+    const [activeForm, setActiveForm] = useState(false)
     const {httpRequest} = useRequest()
-    
-    const warning = () => {
-        setError("Insira um numero para contato.")
-    }
+
+    useEffect(() => {
+        const token = localStorage.getItem("CLIENT_TOKEN")
+        if(!token){
+            setActiveForm(true)
+        }
+    },[])
 
     const checkShippingPrice = async () => {
        if(cep){
@@ -58,30 +63,28 @@ const Cart = () => {
         const productList = products.map(product => {
             return {id: product.id, product: product.title, quantity: product.quant}
         })
-        
+
+        const token = Cookies.get("CLIENT_TOKEN")
+        const req = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/validate`,{
+            headers: {authorization: token}
+        })
+        const res = await req.json()
+        const id = v4()
+
         const order = {
+            id,
             productList,
             info: {
-                status: "Pagamento pendente", clientContact: contact
+                status: "Pagamento pendente", client: res.results
             }
         }
 
-        localStorage.setItem("listItens", JSON.stringify(order))
+        socket.emit("orders", order)
+        localStorage.setItem("OrderId", id)
         const urlCheckout = await httpRequest("product/payment", "post", {productList})
-
         window.location.href = urlCheckout
     }
-
-    useEffect(() => {
-        if(contact.length > 10){
-            setError("")
-        }
-    },[contact])
-
-    const saveNumber = (phone) => {
-        
-    }
-
+    
   return (
     <div className='cartContainer'>
         <div className="productsContainer">
@@ -113,8 +116,8 @@ const Cart = () => {
                 }
             </ul>
             <div className='deliveryContainer'>
-                <button onClick={() => setDelivery(false)} className={!delivery ? "active":""}><DirectionsWalkRoundedIcon /> Pegar no local</button>
-                <button onClick={() => setDelivery(true)} className={delivery ? "active":""}><DeliveryDiningRoundedIcon />Entrega em casa</button>
+                <button onClick={() => setDelivery(false)} className={!delivery ? "emptyBtn active":"emptyBtn"}><DirectionsWalkRoundedIcon /> Pegar no local</button>
+                <button onClick={() => setDelivery(true)} className={delivery ? "emptyBtn active":"emptyBtn"}><DeliveryDiningRoundedIcon />Entrega em casa</button>
             </div>
             {
                 delivery && <>
@@ -132,24 +135,16 @@ const Cart = () => {
                 </>
             }
             <div className="columnMenu">
-                <label>
-                    <span className={error && "textError"}>Numero para contato</span>
-                    <input type="text" className={error && "fieldError"} value={contact} onChange={(e) => !isNaN(e.target.value) && setContact(e.target.value)}/>
-                    <span className='textError'>{error}</span>
-                </label>
-                <label htmlFor='phoneNumber' className='number-save'>
-                    <span>
-                        <input type="checkbox" name="phoneNumber" id="phoneNumber" onChange={(e) => saveNumber(e.target.value)}/> 
-                         Salvar meu número para proximas compras
-                    </span>
-                </label>
                 <h3>Valor total: R$ {valueTotal}</h3>
-                {
-                    contact.length > 10 ? <button className='darkBtn' onClick={createChckOut}>Comprar carrinho</button>:
-                    <button className='disableBtn' onClick={warning}>Comprar carrinho</button>
+                {products.length > 0 && Number(valueTotal) > 0 && Number(valueTotal) > shippingPrice ? 
+                    <button className='darkBtn' onClick={createChckOut}>Comprar carrinho</button>:
+                    <button className='emptyBtn' >Nenhum produto encontrado</button>
                 }
             </div>
         </div>
+        {
+            activeForm && <RegisterNewUser setActiveForm={setActiveForm} createCheckOut={createChckOut} />
+        }
     </div>
   )
 }

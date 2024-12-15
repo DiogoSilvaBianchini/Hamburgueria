@@ -1,30 +1,32 @@
 import './style.css'
-import io from 'socket.io-client'
 import {useEffect} from 'react'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import {v4} from 'uuid'
 
-const PaymentConfirmed = () => {
+const PaymentConfirmed = ({socket}) => {
     useEffect(() => {
-      const itens = JSON.parse(localStorage.getItem("listItens"))
       const emitOrder = async () => {
-        itens.id = v4()
-        itens.info["status"] = "Pagamento efetuado."
-        const socket = await io.connect(import.meta.env.VITE_URL_BACKEND_SOCKET)
-        socket.emit("orders", {
-            order: itens
+        const orderId = localStorage.getItem("OrderId")
+
+        socket.emit("updateOrder", {
+            id: orderId,
+            status: "Pagamento efetuado."
         })
-        localStorage.removeItem("listItens")
+        localStorage.removeItem("OrderId")
       }
-      itens !== null && emitOrder()
-    }, [])
+      emitOrder()
+    }, [socket])
 
   return (
-    <div className='confirmed_payment'>
-      <CheckCircleIcon />
-      <span>Pagamento confirmado com sucesso!</span>
-      <button className='orangeBtn' onClick={() => window.location.href = "http://localhost:5173/"}><ArrowBackIosNewIcon /> Voltar para o menu</button>
+    <div className='confirmed-payment'>
+      <div className="icon-container">
+        <CheckCircleIcon />
+      </div>
+      <div className="text-container">
+        <h3>Pagamento confirmado com sucesso!</h3>
+        <p>Seu pedido está sendo preparado, qualquer duvida estámos no whatsapp!</p>
+        <button className='orangeBtn' onClick={() => window.location.href = "http://localhost:5173/"}><ArrowBackIosNewIcon /> Voltar para o menu</button>
+      </div>
     </div>
   )
 }

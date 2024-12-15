@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 const SlideCards = ({titleSlide, listProducts, category}) => {
     const [updateCard, setUpdateCard] = useState(false)   
     const [product, setProduct] = useState([])
-
+    
     const categoryFilter = () => {
         if(category && listProducts){
             const isFilterCategory = listProducts.filter(product => product.Category.name == category) 
@@ -23,8 +23,8 @@ const SlideCards = ({titleSlide, listProducts, category}) => {
         <div className="slide">
             <ul>
                 {
-                    product.length > 0 ? product.map(product => (
-                        <li key={product.id}>
+                    product.length > 0 ? product.map((product, i) => (
+                        <li key={`slide${i}`}>
                             <Card id={product.id} setUpdateCard={setUpdateCard} updateCard={updateCard} title={product.title} price={product.price} imgUrl={product.imgs[0]} fav={product} ingredients={product.ingredients} describe={product.describe}/>
                         </li>
                     )): <h2 className='empty'>Nenhum produto encontrado!</h2>

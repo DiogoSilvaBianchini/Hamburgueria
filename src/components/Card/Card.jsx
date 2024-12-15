@@ -7,13 +7,13 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ProductInfo from '../ProductInfo/productInfo';
+import { setPopUp } from '../../redux/popUpActive'
 
 const Card = ({id, title, price, imgUrl, ingredients, describe}) => {
   const dispatch = useDispatch()
   const [blockedBtn, setBlocekdBtn] = useState(false)
   const [infoScreen, setInforScreen] = useState(false)
   const [fav, setFav] = useState(false)
-  
 
   const addProduct = (e) => {
     const btn = e.target
@@ -23,6 +23,7 @@ const Card = ({id, title, price, imgUrl, ingredients, describe}) => {
     }
     btn.classList.add("activeButton")
     setBlocekdBtn(true)
+    dispatch(setPopUp(true))
   }
 
   const removeAnimation = (e) => {

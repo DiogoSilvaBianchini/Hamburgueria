@@ -108,7 +108,7 @@
     gap: 16px;
 }
 
-.cartContainer .productValue .deliveryContainer button{
+.cartContainer .productValue .deliveryContainer .emptyBtn{
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -119,7 +119,7 @@
     border-radius: 8px;
 }
 
-.cartContainer .productValue .deliveryContainer button.active{
+.cartContainer .productValue .deliveryContainer .emptyBtn.active{
     border-color: transparent;
     background-color: #222;
     color: #fff;

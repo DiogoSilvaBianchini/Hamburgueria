@@ -1,22 +1,25 @@
 import { useEffect, useRef } from 'react'
 import './style.css'
+import { useDispatch } from 'react-redux'
+import { setPopUp } from '../../redux/popUpActive'
 
-
-const CartPopUp = ({totalPrice, setActivePopUp}) => {
+const CartPopUp = ({totalPrice}) => {
   const popUpRef = useRef("") 
-
+  const dispatch = useDispatch()
+  
   useEffect(() => {
     const timerAnimation = setTimeout(() => {
       if(popUpRef.current){
         popUpRef.current.classList.add("removePopUp")
       }
+
       clearTimeout(timerAnimation)
     }, 4000)
   }, [])
 
   const removePopUp = () => {
     if(popUpRef.current.className.includes("removePopUp")){
-      setActivePopUp(false)
+      dispatch(setPopUp(false))
     }
   } 
 

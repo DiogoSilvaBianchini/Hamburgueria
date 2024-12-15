@@ -12,7 +12,7 @@ const Footer = () => {
       setActiveFooter(true)
     }
   }
-  console.log(activeFooter)
+  
   useEffect(checkIsFooter,[location])
   return (
     <footer className={activeFooter ? "":"none"}>

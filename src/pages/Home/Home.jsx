@@ -3,29 +3,10 @@ import CategoryCard from "../../components/CategoryCard/CategoryCard"
 import SlideCards from "../../components/slideCards/SlideCards"
 import useFetch from "../../hooks/useFetch"
 import Carrosel from "../../components/Carrosel/Carrosel"
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { addProductsList } from "../../redux/productList"
-import useRequest from "../../hooks/useRequest"
 
 const Home = () => {
-  const {httpRequest} = useRequest()
   const {data: productsOrderTime} = useFetch("product/filter/time", "GET")
-
-  const dispatch = useDispatch()
-  const { isProducts } = useSelector(state => state.productList)
-  const productStorage = localStorage.getItem("productsList")
-
-  useEffect(() => {
-    const loadProducts = async () => {
-      const data = await httpRequest("product", "GET")
-      if(data){
-        dispatch(addProductsList({data}))
-      }
-    }
-
-    !productStorage && loadProducts()
-  },[isProducts, dispatch, httpRequest, productStorage])
+  const {data: allProducts} = useFetch("product", "GET")
   
   return (
     <div className="homeContainer">
@@ -51,8 +32,8 @@ const Home = () => {
       </section>
       <section className="homeContent">
         <SlideCards titleSlide={"Novos pratos"} listProducts={productsOrderTime} max={4}/>
-        <SlideCards titleSlide={"Lanches da casa"} listProducts={isProducts} max={4} category={"lanches"}/>
-        <SlideCards titleSlide={"Aperitivos mais pedidos"} listProducts={isProducts} max={4} category={"aperitivos"}/>
+        <SlideCards titleSlide={"Lanches da casa"} listProducts={allProducts} max={4} category={"lanches"}/>
+        <SlideCards titleSlide={"Aperitivos mais pedidos"} listProducts={allProducts} max={4} category={"aperitivos"}/>
       </section>
     </div>
   )

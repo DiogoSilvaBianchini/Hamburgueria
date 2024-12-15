@@ -10,10 +10,11 @@ import { useEffect, useState } from 'react';
 
 const Header = () => {
   const [totalValue, setTotalValue] = useState(0)
-  const [activePopUp, setactivePopUp] = useState(false)
+  
   const {category} = useSelector(state => state.categorySearch)
   const {products} = useSelector(state => state.cartSlice)
-
+  const { activePopUp } = useSelector(state => state.popUpActive)
+  
   const dispatch = useDispatch()
   const location = useLocation()
 
@@ -30,7 +31,6 @@ const Header = () => {
   
     const totalValueProducts = isTotalByProduct.reduce((acc, curr) => acc + curr, 0)
     setTotalValue(totalValueProducts)
-    totalValueProducts > 0 && location.pathname !== "/cart" && setactivePopUp(true)
   }, [products, location])
 
   return (
@@ -48,7 +48,7 @@ const Header = () => {
           </li>
         </ul>
         {
-          activePopUp && <CartPopUp totalPrice={totalValue} setActivePopUp={setactivePopUp}/>
+          activePopUp && <CartPopUp totalPrice={totalValue} />
         }
     </header>
   )

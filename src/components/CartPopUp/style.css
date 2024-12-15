@@ -3,17 +3,18 @@
     height: 60px;
     position: fixed;
     top: 25px;
-    right: 0px;
+    left: 0px;
     background-color: #0db4a1;
     padding: 8px 8px;
-    border-left: 4px solid #333;
+    border-right: 4px solid #333;
     color: #fff;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
     justify-content: flex-start;
     gap: 4px;
-    border-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
     animation: move-left .4s linear forwards;
     z-index: 1000;
     transition: .4s;
@@ -39,16 +40,16 @@
 
 @keyframes move-left{
     from{
-        right: -400px;
+        left: -400px;
     }to{
-        right: 0px;
+        left: 0px;
     }
 }
 
 @keyframes move-rigth{
     from{
-        right: 0px;
+        left: 0px;
     }to{
-        right: -400px;
+        left: -400px;
     }
 }

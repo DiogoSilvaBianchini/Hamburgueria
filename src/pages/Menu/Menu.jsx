@@ -78,7 +78,7 @@ const Menu = () => {
         highestPriceButton.current.classList.remove("active")
         lowestPriceButton.current.classList.remove("active")
     }
-
+    
   return (
     <div className='products-container'>
         <div className="search-container">
@@ -108,7 +108,7 @@ const Menu = () => {
         </div>
         <ul className="products-list">
             {
-                products.length > 0 ? products.map(product => (
+                products.length > 0 ? products.map((product) => (
                     <li key={product.id}>
                         <Card title={product.title} ingredients={product.ingredients} imgUrl={product.imgs[0]} price={product.price} id={product.id}/>
                     </li>

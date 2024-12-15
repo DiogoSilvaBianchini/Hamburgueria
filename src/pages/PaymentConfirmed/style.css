@@ -1,27 +1,84 @@
-.confirmed_payment{
-    width: 100%;
-    height: 77.6vh;
+.confirmed-payment{
+    width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 16px;
+    background-color: #fff;
+    margin-top: 16px;
 }
 
-.confirmed_payment > svg{
-    font-size: 250px;
-    color: rgb(0, 170, 0);
+.confirmed-payment .icon-container{
+    width: 100%;
+    height: 100px;
+    background-color: #02c04b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
-.confirmed_payment span{
+.confirmed-payment .icon-container svg{
+    font-size: 84px;
+    color: #02c04b;
+    background-color: #fff;
+    border-radius: 160px;
+    z-index: 1000;
+    position: absolute;
+    bottom: -30px;
+    animation: icon-animation .4s linear;
+}
+
+.confirmed-payment .text-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 10px;
+    padding: 16px;
+}
+
+.confirmed-payment .text-container h3{
     font-family: 'Inter', sans-serif;
     font-size: 1.5rem;
 }
 
-.confirmed_payment button{
+.confirmed-payment .text-container p{
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    text-align: center;
+    color: #999;
+    padding: 0 16px;
+}
+
+.confirmed-payment .text-container button{
     border-radius: 16px;
     padding: 8px;
     display: flex;
     align-items: center;
     gap: 16px;
+    background-color: #02c04b;
+    border-color: #02c04b;
+}
+
+.confirmed-payment .text-container button:hover{
+    color: #02c04b;
+}
+
+.confirmed-payment .text-container button svg{
+    font-size: 1rem;
+}
+
+@keyframes icon-animation{
+    0%{
+        transform: rotate(0deg) scale(1);
+    }
+    50%{
+        transform: rotate(20deg) scale(1.3);
+    }
+    100%{
+        transform: rotate(0deg);
+    }
 }
